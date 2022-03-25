@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const  axios  = require('axios');
-const { Videogame , Gender , Posts , User, Comment } = require("../db");
+const { Videogame , Gender , Post , User, Comment } = require("../db");
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -78,13 +78,9 @@ router.get("/videogames" , async (req,res) => {
 })
 
 router.post("/videogames" , async(req,res) => {
+
     let {name , desc , date , rating , platforms , gender} = req.body;
-    console.log(name)
-    console.log(desc)
-    console.log( date)
-    console.log(typeof rating)
-    console.log(platforms);
-    console.log(gender)
+
     try {
         if(!name || !desc) return res.send("Completar toda la data");
         let isGame = await Videogame.findOne({
@@ -194,6 +190,34 @@ router.post("/createUser" , async(req,res)=> {
         res.send(error).status(404)
     }
 
+
+})
+
+router.post("/createPost" , async(req,res) => {
+
+    let {idUser} = req.query;
+    console.log(idUser)
+
+    try {
+        let {title , text} = req.body;
+        if(!title || !text){
+            return res.status(404).send("Complete los campos para crear el posteo")
+        }
+        let post = await Post.create({
+            title , text
+        });
+        let user = await User.findOne({
+            where : {
+                id  : Number(idUser)
+            }
+        })
+
+        await post.setUser(user);
+        res.send(post)
+
+    } catch (error) {
+        res.status(404).send(error)
+    }
 
 })
 
