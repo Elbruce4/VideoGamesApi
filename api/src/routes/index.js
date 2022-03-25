@@ -172,8 +172,6 @@ router.post("/leaveComment" , async(req,res) => {
         })
         let info = await getAllGames();
         let game = info.find(obj => obj.id === videogameId);
-        console.log("game" , game)
-        console.log("user" , user)
 
         await comment.setVideogame(game)
         await comment.setUser(user)
