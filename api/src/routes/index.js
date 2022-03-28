@@ -32,7 +32,8 @@ const getApiGames = async () => {
                 date : obj.released,
                 rating: obj.rating,
                 platforms : obj.platforms.map(obj2 => obj2.platform.name),
-                desc : "Muy bonito jogo"
+                desc : "Muy bonito jogo",
+                genres: obj.genres.map(obj => obj.name)
             }
         })
         return games
@@ -80,7 +81,7 @@ router.get("/videogames" , async (req,res) => {
 router.post("/videogames" , async(req,res) => {
 
     let {name , desc , date , rating , platforms , gender} = req.body;
-
+    console.log(name , desc , date , rating , platforms , gender)
     try {
         if(!name || !desc) return res.send("Completar toda la data");
         let isGame = await Videogame.findOne({
@@ -99,6 +100,7 @@ router.post("/videogames" , async(req,res) => {
             rating,
             platforms
         });
+        console.log("newGame: " , newGame)
         if(newGame){
             gender.map(async obj => 
                 await Gender.findOne({
@@ -152,6 +154,15 @@ router.get("/videogame/:idGame" , async (req,res) => {
     }
 })
 
+router.get("/comments" , async(req,res)=>{
+    try {
+        let comments = await Comment.findAll();
+        res.send(comments)
+    } catch (error) {
+        res.send(error).status(404)
+    }
+})
+
 router.post("/leaveComment" , async(req,res) => {
     
     let {title,text,userId,videogameId} = req.body;
@@ -167,11 +178,13 @@ router.post("/leaveComment" , async(req,res) => {
             }
         })
         let info = await getAllGames();
-        let game = info.find(obj => obj.id === videogameId);
+        let game = info.find(obj => obj.id === videogameId.toString());
+        console.log(game);
 
-        await comment.setVideogame(game)
         await comment.setUser(user)
-        res.send(comment)
+        await comment.setVideogame(game)
+
+        res.send(game)
     } catch (error) {
         res.status(404).send(error)
     }
