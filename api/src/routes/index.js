@@ -5,7 +5,7 @@ const { Videogame , Gender , Post , User, Comment } = require("../db");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
-const APIKEY = "3a27a92bca59469b80d14460d384d0aa"
+const APIKEY = "3a27a92bca59469b80d14460d384d0aa";
 //GET https://api.rawg.io/api/gems?key=APIKEY
 
 const router = Router();
@@ -48,10 +48,6 @@ const getAllGames = async () => {
     let games = gamesApi.concat(gamesDB);
     return games
 }
-
-/* const getDBGames = async () => {
-    const games = await Videogame
-} */
 
 router.get("/" , async (req,res) => {
     try {
@@ -155,9 +151,19 @@ router.get("/videogame/:idGame" , async (req,res) => {
 })
 
 router.get("/comments" , async(req,res)=>{
+    
     try {
-        let comments = await Comment.findAll();
-        res.send(comments)
+        let {id} = req.query;
+        if(!id){
+            let comments = await Comment.findAll();
+            return res.send(comments)
+        }
+        let comments = await Comment.findAll({
+            where : {
+                videogameId : id
+            }
+        })
+        return res.send(comments)
     } catch (error) {
         res.send(error).status(404)
     }
