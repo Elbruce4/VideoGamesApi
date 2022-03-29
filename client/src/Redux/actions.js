@@ -14,23 +14,27 @@ export const GetComments = (id) => {
 }
 
 export const NewComment = (data) => {
+    console.log("entro");
+    console.log(data)
     return function (dispatch){
-        fetch("http://localhost:3001/leaveComments",{
+        fetch("http://localhost:3001/leaveComment",{
             method : "POST",
             body : JSON.stringify({
                 title : data.title,
                 text : data.text,
-                userId : data.userid,
-                videogameId : data.videogameId
+                videogameId : data.videogameId,
+                userId : data.userId
             }),
             headers : {
                 "Content-type" : "application/json"
             }
         })
-            .then(obj => obj.json())
-            .then(obj => dispatch({
+            .then(obj => {obj.json()})
+            .then(obj => {
+                console.log(obj)
+                return dispatch({
                 payload : obj,
                 type :  "LEAVE_COMMENT" 
-            }))
+            })})
     }
 }

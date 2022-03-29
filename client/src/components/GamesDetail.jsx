@@ -18,30 +18,29 @@ const GameDetail = () => {
 
     return (
         <div>
-            {
-                comments.length > 0 ? comments.map(obj => {
-                    return (
-                        <div>
-                            <h3>{obj.title}</h3>
-                            <p>{obj.text}</p>
-                            <Link to={"leaveComment"}>
-                        
-                                <button>Dejar nuevo comentarios</button>
+            
+            <div>
+                {
+                    comments.length > 0 ? comments.map(obj => {
+                        return (
+                            <div key={obj.id}>
+                                <h3>{obj.title}</h3>
+                                <p>{obj.text}</p>
+                            </div>
+                        )
+                    }) :
+                    <div>
+                        <h3>Este juego aún no tiene ningún comentario</h3>
 
-                            </Link>
-                        </div>
-                    )
-                }) :
-                <div>
-                    <h3>Este juego aún no tiene ningún comentario</h3>
+                    </div>
+                }
+                <Link to={"leaveComment"}>
+                            
+                    <button>Dejar nuevo comentarios</button>
 
-                    <Link to={"leaveComment"}>
-                        
-                        <button>Dejar nuevo comentarios</button>
-
-                    </Link>
-                </div>
-            }
+                </Link>
+            </div>
+            
         </div>
     )
 }

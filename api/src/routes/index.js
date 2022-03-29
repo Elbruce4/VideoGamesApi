@@ -172,7 +172,8 @@ router.get("/comments" , async(req,res)=>{
 router.post("/leaveComment" , async(req,res) => {
     
     let {title,text,userId,videogameId} = req.body;
-
+    console.log(title,text,userId,videogameId);
+    
     try {
         let comment = await Comment.create({
             title,
