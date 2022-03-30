@@ -27,7 +27,6 @@ const getApiGames = async () => {
         //console.log(data.data)
         const games = data.data.results.map(obj => {
             return {
-                id : obj.id.toString(),
                 name : obj.name,
                 date : obj.released,
                 rating: obj.rating,
@@ -43,10 +42,43 @@ const getApiGames = async () => {
 }
 
 const getAllGames = async () => {
-    let gamesDB = await getDBGames();
-    let gamesApi = await getApiGames();
-    let games = gamesApi.concat(gamesDB);
-    return games
+    try {
+        
+        let arrayGames = []
+        let gamesDB = await getDBGames();
+        let gamesApi = await getApiGames();
+        console.log(gamesApi)
+        await gamesApi.map(async obj => {
+            try {
+                let [game , isNew] = await Videogame.findOrCreate({
+                    where:{
+                        name: obj.name
+                    },
+                    defaults: {
+                        name : obj.name,
+                        desc : obj.desc,
+                        date : obj.date,
+                        rating : obj.rating,
+                        platforms : obj.platforms
+                    }
+                })
+                obj.genres.map(async obj2 => 
+                    await Gender.findOne({
+                        where : {
+                            name : obj2
+                        }
+                    }).then(obj3 => game.addGender(obj3)))
+                    arrayGames.push(game)
+            } catch (error) {
+                return error
+            }
+        })
+        let games = arrayGames.concat(gamesDB);
+        return games;
+
+    } catch (error) {
+        return error
+    }
 }
 
 router.get("/" , async (req,res) => {
