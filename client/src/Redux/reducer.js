@@ -18,6 +18,12 @@ function rootReducer (state = initialState , action) {
                 comments : action.payload
             }
 
+        case "GET_GAMES":
+            return {
+                ...state,
+                videogames: action.payload
+            }
+
         default:
             return {
                 ...state

@@ -1,18 +1,19 @@
-import {useState , useEffect} from "react"
+import {useEffect} from "react"
 import Games from "./Games";
 import NavBar from "./NavBar";
+import { useDispatch , useSelector } from "react-redux";
+import { GetGames } from "../Redux/actions";
 
 const Home = () => {
 
-    const [games , setGames] = useState();
+    const games = useSelector(obj => obj.videogames);
+    const dispatch = useDispatch()
 
     console.log(games)
 
     useEffect(()=>{
-        fetch("http://localhost:3001/")
-            .then(obj => obj.json())
-            .then(obj => setGames(obj))
-    },[])
+        dispatch(GetGames())
+    },[dispatch])
 
     return (
         <div>

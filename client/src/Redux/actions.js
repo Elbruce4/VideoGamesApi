@@ -38,3 +38,14 @@ export const NewComment = (data) => {
             })})
     }
 }
+
+export const GetGames = () => {
+    return function (dispatch){
+        fetch("http://localhost:3001/")
+            .then(obj => obj.json())
+            .then(obj => dispatch({
+                payload: obj,
+                type: "GET_GAMES"
+            }))
+    }
+}

@@ -20,6 +20,7 @@ const GameDetail = () => {
         <div>
             
             <div>
+                
                 {
                     comments.length > 0 ? comments.map(obj => {
                         return (
