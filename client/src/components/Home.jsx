@@ -6,15 +6,24 @@ import { GetGames , OrderByRating } from "../Redux/actions";
 
 const Home = () => {
 
+    const [search , setSearch] = useState("")
     const [refresh , setRefresh] = useState(false)
     const games = useSelector(obj => obj.videogames);
     const dispatch = useDispatch()
     console.log("¿Recarga?")
 
     const ratingFilter = (e) => {
-        
+
         dispatch(OrderByRating(e.target.value));
         setRefresh(!refresh)
+    }
+
+    const handleSearch = (e) => {
+        setSearch(e.target.value)
+    }
+
+    const searchByName = () => {
+        console.log(search)
     }
 
     useEffect(()=>{
@@ -30,6 +39,13 @@ const Home = () => {
                     <option value="best">Best Rating</option>
                     <option value="worst">Worst Rating</option>
                 </select>
+            }
+            {
+                <div>
+                    <label htmlFor="">Search by name</label>
+                    <input type="text" onChange={handleSearch} />
+                    <button onClick={searchByName}>Search</button>
+                </div>
             }
             {
                 games ? 

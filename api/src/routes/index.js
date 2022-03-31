@@ -90,6 +90,17 @@ router.get("/" , async (req,res) => {
     }
 })
 
+router.get("/:nameGame" , async(req,res)=> {
+    try {
+        let {nameGame} = req.params;
+        const games = await getAllGames();
+        let gameSelected = games.find(obj => obj.name === nameGame);
+        res.send(gameSelected)
+    } catch (error) {
+        res.send(error)
+    }
+})
+
 router.get("/videogames" , async (req,res) => {
     let { name } = req.query;
     try {

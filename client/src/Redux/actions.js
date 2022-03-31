@@ -58,3 +58,14 @@ export const OrderByRating = (value) => {
     }
 }
 
+export const SearchByName = (value) => {
+    return function (dispatch){
+        fetch("http://localhost:3001/" + value)
+            .then(obj => obj.json())
+            .then(obj => dispatch({
+                payload: obj,
+                type: "GET_ONE_GAME"
+            }))
+    }
+}
+
