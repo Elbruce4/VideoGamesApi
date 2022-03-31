@@ -49,3 +49,12 @@ export const GetGames = () => {
             }))
     }
 }
+
+export const OrderByRating = (value) => {
+    
+    return {
+        type : "ORDER_BY_RATING",
+        payload : value
+    }
+}
+

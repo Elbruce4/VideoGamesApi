@@ -1,5 +1,6 @@
 const initialState = {
     videogames : [],
+    videogamesBackUp : [],
     comments : []
 }
 
@@ -21,9 +22,36 @@ function rootReducer (state = initialState , action) {
         case "GET_GAMES":
             return {
                 ...state,
-                videogames: action.payload
+                videogames: action.payload,
+                videogamesBackUp: action.payload
             }
+        
+        case "ORDER_BY_RATING":
 
+            console.log(action.payload)
+            if(action.payload === "none"){
+                return {
+                    ...state,
+                    videogames : state.videogamesBackUp
+                }
+            } 
+            let games = action.payload === "best" ? 
+                state.videogamesBackUp.sort((a,b)=> {
+                    if(a.rating > b.rating) return -1;
+                    if(a.rating < b.rating) return 1;
+                    return 0;
+                }) :
+                state.videogamesBackUp.sort((a,b)=> {
+                    if(a.rating > b.rating) return 1;
+                    if(a.rating < b.rating) return -1;
+                    return 0;
+                });
+
+            return {
+                ...state,
+                videogames: games
+            }
+            
         default:
             return {
                 ...state

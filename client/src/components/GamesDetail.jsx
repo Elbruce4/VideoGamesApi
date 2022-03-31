@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useDispatch , useSelector } from "react-redux"
 import { GetComments } from "../Redux/actions.js";
 
+
 const GameDetail = () => {
 
     let dispatch = useDispatch();
@@ -20,7 +21,7 @@ const GameDetail = () => {
         <div>
             
             <div>
-                
+
                 {
                     comments.length > 0 ? comments.map(obj => {
                         return (
