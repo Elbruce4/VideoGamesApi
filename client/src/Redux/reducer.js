@@ -1,7 +1,8 @@
 const initialState = {
     videogames : [],
     videogamesBackUp : [],
-    comments : []
+    comments : [],
+    oneGame : {}
 }
 
 function rootReducer (state = initialState , action) {
@@ -47,11 +48,18 @@ function rootReducer (state = initialState , action) {
                     return 0;
                 });
 
-            return {
-                ...state,
-                videogames: games
-            }
-            
+                
+                return {
+                    ...state,
+                    videogames: games
+                }
+                
+            case "GET_ONE_GAME": 
+                
+                return {
+                    ...state,
+                    oneGame : action.payload
+                }
         default:
             return {
                 ...state

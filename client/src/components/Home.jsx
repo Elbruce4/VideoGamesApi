@@ -3,6 +3,7 @@ import Games from "./Games";
 import NavBar from "./NavBar";
 import { useDispatch , useSelector } from "react-redux";
 import { GetGames , OrderByRating } from "../Redux/actions";
+import { Link } from "react-router-dom";
 
 const Home = () => {
 
@@ -20,10 +21,6 @@ const Home = () => {
 
     const handleSearch = (e) => {
         setSearch(e.target.value)
-    }
-
-    const searchByName = () => {
-        console.log(search)
     }
 
     useEffect(()=>{
@@ -44,7 +41,9 @@ const Home = () => {
                 <div>
                     <label htmlFor="">Search by name</label>
                     <input type="text" onChange={handleSearch} />
-                    <button onClick={searchByName}>Search</button>
+                    <Link to={"/gameDetail/"+ search}>
+                        <button >Search</button>
+                    </Link>
                 </div>
             }
             {

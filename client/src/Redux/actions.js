@@ -60,6 +60,7 @@ export const OrderByRating = (value) => {
 
 export const SearchByName = (value) => {
     return function (dispatch){
+        console.log(value)
         fetch("http://localhost:3001/" + value)
             .then(obj => obj.json())
             .then(obj => dispatch({

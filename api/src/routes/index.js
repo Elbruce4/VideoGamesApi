@@ -94,7 +94,7 @@ router.get("/:nameGame" , async(req,res)=> {
     try {
         let {nameGame} = req.params;
         const games = await getAllGames();
-        let gameSelected = games.find(obj => obj.name === nameGame);
+        let gameSelected = games.find(obj => obj.name.toLocaleLowerCase() === nameGame.toLocaleLowerCase());
         res.send(gameSelected)
     } catch (error) {
         res.send(error)

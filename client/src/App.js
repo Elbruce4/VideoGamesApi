@@ -4,6 +4,7 @@ import Home from './components/Home';
 import LandingPage from './components/LandingPage';
 import GameDetail from './components/GamesDetail';
 import CreateComment from './components/CreateComment';
+import OneGame from './components/OneGame';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path='/home' element={<Home />} />
           <Route path='/:id' element={<GameDetail />} />
           <Route path='/:id/leaveComment' element={<CreateComment />} />
+          <Route path='/gameDetail/:game' element={<OneGame />} />
         </Routes>
       </BrowserRouter>
     </div>
