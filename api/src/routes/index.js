@@ -1,6 +1,8 @@
 const { Router } = require('express');
 const  axios  = require('axios');
 const { Videogame , Gender , Post , User, Comment } = require("../db");
+const { route } = require('next/dist/server/router');
+const bcryptjs = require("bcryptjs");
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -244,7 +246,7 @@ router.post("/leaveComment" , async(req,res) => {
     }
 });
 
-router.post("/createUser" , async(req,res)=> {
+/* router.post("/createUser" , async(req,res)=> {
 
     try {
         let {name, lastName, password, favs, text} = req.body;
@@ -258,7 +260,7 @@ router.post("/createUser" , async(req,res)=> {
     }
 
 
-})
+}) */
 
 router.post("/createPost" , async(req,res) => {
 
@@ -286,6 +288,76 @@ router.post("/createPost" , async(req,res) => {
         res.status(404).send(error)
     }
 
+})
+
+router.post("/createUser" , async (req,res)=> {
+    try {
+        let {name , lastName , password, email} = req.body;
+        if(!name || !lastName || !password || !email) {
+
+            res.json({
+                message :
+                "Debe completar todo los campos para crear un nuevo usuario"
+            })
+
+        }
+
+        let isEmail = await User.findOne({
+            where : {
+                email
+            }
+        })
+        if(isEmail) return res.json({
+            message : "Es mail ya fue registrado"
+        })
+
+        bcryptjs.hash(password, 10).then((hash) => {
+            User.create({
+                name,
+                lastName,
+                email,
+                password : hash
+            }).then(() => {
+                return res.status(200).json("Usuario registrado, con éxito!");
+              })
+              .catch((err) => {
+                if (err) {
+                  return res.status(400).json({ error: err });
+                }
+              });
+        })
+
+
+    } catch (error) {
+        res.send(error).status(404);
+    }
+})
+
+router.post("/loginUser" , async(req,res)=> {
+  /* bcrypt.compare("B4c0/\/", hash, function(err, res) {
+    // res === true
+}); */
+    try {
+        let {email , password} = req.body;
+        let user = await User.findOne({
+            where : {
+                email,
+            }
+        })
+        if(user){   
+            bcryptjs.compare(password, user.password, function(err, res2) {
+                if(res2){
+                    return res.send("Logueo existoso");
+                } else {
+                    return res.send("Creedenciales incorrectas");
+                }
+            });
+        } else {
+            res.send("No hay usuarios con ese mail");
+        }
+    } catch (error) {
+        res.send(error);
+    }
 })
 
 
