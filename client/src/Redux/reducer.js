@@ -54,12 +54,20 @@ function rootReducer (state = initialState , action) {
                     videogames: games
                 }
                 
-            case "GET_ONE_GAME": 
-                
-                return {
-                    ...state,
-                    oneGame : action.payload
-                }
+        case "GET_ONE_GAME": 
+            
+            return {
+                ...state,
+                oneGame : action.payload
+            }
+
+        case "CLEAR_STATE":
+
+            return {
+                ...state,
+                oneGame : action.payload
+            }
+        
         default:
             return {
                 ...state

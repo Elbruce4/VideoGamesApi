@@ -95,7 +95,11 @@ router.get("/:nameGame" , async(req,res)=> {
         let {nameGame} = req.params;
         const games = await getAllGames();
         let gameSelected = games.find(obj => obj.name.toLocaleLowerCase() === nameGame.toLocaleLowerCase());
-        res.send(gameSelected)
+        if(gameSelected){
+            res.send(gameSelected)
+        } else {
+            res.status(404).send("No hay juego con ese nombre")
+        }
     } catch (error) {
         res.send(error)
     }

@@ -70,3 +70,9 @@ export const SearchByName = (value) => {
     }
 }
 
+export const ClearState = () => {
+    return {
+        payload: null,
+        type : "CLEAR_STATE"
+    }
+}
