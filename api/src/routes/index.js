@@ -334,9 +334,7 @@ router.post("/createUser" , async (req,res)=> {
 })
 
 router.post("/loginUser" , async(req,res)=> {
-  /* bcrypt.compare("B4c0/\/", hash, function(err, res) {
-    // res === true
-}); */
+    
     try {
         let {email , password} = req.body;
         let user = await User.findOne({
@@ -347,9 +345,14 @@ router.post("/loginUser" , async(req,res)=> {
         if(user){   
             bcryptjs.compare(password, user.password, function(err, res2) {
                 if(res2){
-                    return res.send("Logueo existoso");
+                    return res.json({
+                        message : "Logueo existoso",
+                        user
+                    });
                 } else {
-                    return res.send("Creedenciales incorrectas");
+                    return res.json({
+                        message : "Creedenciales incorrectas"
+                    });
                 }
             });
         } else {
