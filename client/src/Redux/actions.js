@@ -1,5 +1,6 @@
 
 export const GetComments = (id) => {
+    console.log(id);
     return function (dispatch) {
         fetch("http://localhost:3001/comments?id=" + id)
             .then(obj => obj.json())
@@ -74,5 +75,47 @@ export const ClearState = () => {
     return {
         payload: null,
         type : "CLEAR_STATE"
+    }
+}
+
+export const Sign = (data) => {
+        fetch("http://localhost:3001/createUser",{
+            method : "POST",
+            body : JSON.stringify({
+                name : data.name,
+                lastName : data.lastName,
+                email : data.email,
+                password : data.password
+            }),
+            headers : {
+                "Content-type" : "application/json"
+            }
+        })
+}
+
+export const Log = (data) => {
+    return function (dispatch) {
+        fetch("http://localhost:3001/loginUser",{
+            method : "POST",
+            body : JSON.stringify({
+                email : data.email,
+                password : data.password
+            }),
+            headers : {
+                "Content-type" : "application/json"
+            }
+        })
+        .then(obj => obj.json())
+        .then(obj => dispatch({
+            type : "LOG_IN",
+            payload : obj
+        }))
+    }
+}
+
+export const CleanComments = () => {
+    return {
+        type: "CLEAN_COMMENTS",
+        payload : null
     }
 }

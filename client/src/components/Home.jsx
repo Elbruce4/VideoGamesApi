@@ -10,8 +10,9 @@ const Home = () => {
     const [search , setSearch] = useState("")
     const [refresh , setRefresh] = useState(false)
     const games = useSelector(obj => obj.videogames);
+    const user = useSelector(obj => obj.userLogIn)
     const dispatch = useDispatch()
-    console.log("¿Recarga?")
+    console.log(user)
 
     const ratingFilter = (e) => {
 
@@ -47,7 +48,7 @@ const Home = () => {
                 </div>
             }
             {
-                games ? 
+                games.length > 0 ? 
                 games.map(obj => {
                     return (
                         <Games key={obj.id} props={obj}></Games>

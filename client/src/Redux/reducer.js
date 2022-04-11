@@ -2,7 +2,8 @@ const initialState = {
     videogames : [],
     videogamesBackUp : [],
     comments : [],
-    oneGame : {}
+    oneGame : {},
+    userLogIn : {}
 }
 
 function rootReducer (state = initialState , action) {
@@ -67,6 +68,29 @@ function rootReducer (state = initialState , action) {
                 ...state,
                 oneGame : action.payload
             }
+
+        case "CLEAN_COMMENTS":
+
+            return {
+                ...state,
+                comments : action.payload
+            }
+
+        case "LOG_IN":
+
+            if(action.payload.message === "Logueo existoso"){
+                return {
+                    ...state,
+                    userLogIn : action.payload.user
+                }
+            } else if (action.payload.message === "Creedenciales incorrectas"){
+                return {
+                    ...state,
+                    userLogIn : undefined
+                }
+            }
+
+        break;
         
         default:
             return {

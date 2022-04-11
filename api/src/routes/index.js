@@ -1,8 +1,10 @@
 const { Router } = require('express');
+const express = require('express');
 const  axios  = require('axios');
 const { Videogame , Gender , Post , User, Comment } = require("../db");
 const { route } = require('next/dist/server/router');
 const bcryptjs = require("bcryptjs");
+const cookieparser = require('cookie-parser');
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -11,6 +13,14 @@ const APIKEY = "3a27a92bca59469b80d14460d384d0aa";
 //GET https://api.rawg.io/api/gems?key=APIKEY
 
 const router = Router();
+
+router.use(cookieparser());
+router.use(express.urlencoded({ extended: true }));
+
+router.use((req, res, next) => {
+    next();
+});
+  
 
 const getDBGames = async () => {
     try {
@@ -26,7 +36,6 @@ const getDBGames = async () => {
 const getApiGames = async () => {
     try {
         const data = await axios.get(`https://api.rawg.io/api/games?key=${APIKEY}`);
-        //console.log(data.data)
         const games = data.data.results.map(obj => {
             return {
                 name : obj.name,
@@ -49,7 +58,6 @@ const getAllGames = async () => {
         let arrayGames = []
         let gamesDB = await getDBGames();
         let gamesApi = await getApiGames();
-        console.log(gamesApi)
         await gamesApi.map(async obj => {
             try {
                 let [game , isNew] = await Videogame.findOrCreate({
@@ -92,7 +100,8 @@ router.get("/" , async (req,res) => {
     }
 })
 
-router.get("/:nameGame" , async(req,res)=> {
+router.get("/videogames/:nameGame" , async(req,res)=> {
+
     try {
         let {nameGame} = req.params;
         const games = await getAllGames();
@@ -126,7 +135,6 @@ router.get("/videogames" , async (req,res) => {
 router.post("/videogames" , async(req,res) => {
 
     let {name , desc , date , rating , platforms , gender} = req.body;
-    console.log(name , desc , date , rating , platforms , gender)
     try {
         if(!name || !desc) return res.send("Completar toda la data");
         let isGame = await Videogame.findOne({
@@ -134,7 +142,6 @@ router.post("/videogames" , async(req,res) => {
                 name
             }
         });
-        console.log("is game: ", isGame)
         if(isGame){
             return res.send("Este juego ya fue creado")
         }
@@ -145,7 +152,6 @@ router.post("/videogames" , async(req,res) => {
             rating,
             platforms
         });
-        console.log("newGame: " , newGame)
         if(newGame){
             gender.map(async obj => 
                 await Gender.findOne({
@@ -154,7 +160,6 @@ router.post("/videogames" , async(req,res) => {
                     }
                 }).then(obj => newGame.addGender(obj))
             );
-            console.log(newGame)
             //await newGame.save()
             return res.send(newGame)
         }
@@ -186,7 +191,6 @@ router.get("/genre" , async(req,res) => {
 router.get("/videogame/:idGame" , async (req,res) => {
 
     let {idGame} = req.params
-    console.log(idGame)
     try {
 
         let info = await getAllGames();
@@ -201,8 +205,9 @@ router.get("/videogame/:idGame" , async (req,res) => {
 
 router.get("/comments" , async(req,res)=>{
     
+    let {id} = req.query;
+    console.log(id);
     try {
-        let {id} = req.query;
         if(!id){
             let comments = await Comment.findAll();
             return res.send(comments)
@@ -214,33 +219,39 @@ router.get("/comments" , async(req,res)=>{
         })
         return res.send(comments)
     } catch (error) {
-        res.send(error).status(404)
+        res.send("error").status(404)
     }
 })
 
 router.post("/leaveComment" , async(req,res) => {
     
     let {title,text,userId,videogameId} = req.body;
-    console.log(title,text,userId,videogameId);
     
     try {
-        let comment = await Comment.create({
-            title,
-            text
-        });
-        let user = await User.findOne({
-            where : {
-                id  : Number(userId)
-            }
-        })
-        let info = await getAllGames();
-        let game = info.find(obj => obj.id === videogameId.toString());
-        console.log(game);
+        if(!title || !text || !userId || !videogameId){
 
-        await comment.setUser(user)
-        await comment.setVideogame(game)
+            res.json({
+                message : "completar todos los campos"
+            });
 
-        res.send(game)
+        } else {
+            let comment = await Comment.create({
+                title,
+                text
+            });
+            let user = await User.findOne({
+                where : {
+                    id  : Number(userId)
+                }
+            })
+            let info = await getAllGames();
+            let game = info.find(obj => obj.id === videogameId.toString());
+    
+            await comment.setUser(user)
+            await comment.setVideogame(game)
+    
+            res.send(game)
+        }
     } catch (error) {
         res.status(404).send(error)
     }
@@ -265,7 +276,6 @@ router.post("/leaveComment" , async(req,res) => {
 router.post("/createPost" , async(req,res) => {
 
     let {idUser} = req.query;
-    console.log(idUser)
 
     try {
         let {title , text} = req.body;
@@ -345,7 +355,8 @@ router.post("/loginUser" , async(req,res)=> {
         if(user){   
             bcryptjs.compare(password, user.password, function(err, res2) {
                 if(res2){
-                    return res.json({
+                    console.log(typeof user.name)
+                    return res.cookie("userName" ,user.name).json({
                         message : "Logueo existoso",
                         user
                     });

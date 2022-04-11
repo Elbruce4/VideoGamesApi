@@ -1,19 +1,20 @@
 import {useState} from "react";
 import { useParams } from "react-router-dom";
 import { NewComment } from "../Redux/actions";
-import { useDispatch } from "react-redux";
+import { useDispatch  , useSelector} from "react-redux";
 import { Link } from "react-router-dom";
 
 const CreateComment = () => {
 
     let param = useParams();
     let dispatch = useDispatch();
+    let user = useSelector(obj => obj.userLogIn)
 
     console.log( typeof param.id )
 
     const [data , setData] = useState({
         videogameId : param.id,
-        userId : 1,
+        userId : user.id ? user.id : 1,
         text : "",
         title : ""
     })
@@ -31,7 +32,7 @@ const CreateComment = () => {
         dispatch(NewComment(data));
         setData({
             videogameId : param.id,
-            userId : 1,
+            userId : user.id ? user.id : 1,
             text : " ",
             title : " "
         })
@@ -42,9 +43,9 @@ const CreateComment = () => {
         <form>
             <input type="text" placeholder="Title" name="title" onChange={e => handleChange(e)}/>
             <textarea type="text" placeholder="Comment" name="text" onChange={e => handleChange(e)}/>
-            <Link to={"/" + param.id}>
-                <button type="submit" onClick={handleSubmit}> Comment </button>
-            </Link>
+            
+                <button type="submit" onClick={handleSubmit}> <Link to={"/home"}>Comment</Link> </button>
+        
         </form>
     )
 }
