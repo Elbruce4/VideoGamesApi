@@ -15,7 +15,6 @@ export const GetComments = (id) => {
 }
 
 export const NewComment = (data) => {
-    console.log("entro");
     console.log(data)
     return function (dispatch){
         fetch("http://localhost:3001/leaveComment",{
@@ -30,13 +29,14 @@ export const NewComment = (data) => {
                 "Content-type" : "application/json"
             }
         })
-            .then(obj => {obj.json()})
-            .then(obj => {
-                console.log(obj)
+            .then(obj => obj.json())
+            .then(obj2 => {
+                console.log(obj2)
                 return dispatch({
-                payload : obj,
-                type :  "LEAVE_COMMENT" 
-            })})
+                    payload : obj2,
+                    type :  "LEAVE_COMMENT" 
+                })
+            })
     }
 }
 
@@ -62,7 +62,7 @@ export const OrderByRating = (value) => {
 export const SearchByName = (value) => {
     return function (dispatch){
         console.log(value)
-        fetch("http://localhost:3001/" + value)
+        fetch("http://localhost:3001/videogames/" + value)
             .then(obj => obj.json())
             .then(obj => dispatch({
                 payload: obj,

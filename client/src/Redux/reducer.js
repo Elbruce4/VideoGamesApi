@@ -12,7 +12,7 @@ function rootReducer (state = initialState , action) {
         case "LEAVE_COMMENT":
             return {
                 ...state,
-                comments : state.comments.concat(action.payload)
+                comments : action.name ? state.comments.concat(action.payload) : undefined
             }
         
         case "GET_COMMENTS" : 
