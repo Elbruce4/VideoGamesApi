@@ -7,6 +7,7 @@ import CreateComment from './components/CreateComment';
 import OneGame from './components/OneGame';
 import LogIn from './components/LogIn';
 import SignIn from './components/SignIn';
+import CreateGame from './components/CreateGame';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path='/:id' element={<GameDetail />} />
           <Route path='/:id/leaveComment' element={<CreateComment />} />
           <Route path='/gameDetail/:game' element={<OneGame />} />
+          <Route path='/createGame' element={<CreateGame />} />
         </Routes>
       </BrowserRouter>
     </div>

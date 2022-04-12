@@ -374,5 +374,28 @@ router.post("/loginUser" , async(req,res)=> {
     }
 })
 
+/* router.post("/createGame" , async(req,res) => {
+    try {
+        let {name , desc , date , rating , platforms} = req.body;
+        if (!name || !desc ){
+            res.json({
+                message : "Completar todo los campos"
+            })
+        } else {
+            let isGame = await Videogame.findOne({
+                where : {
+                    name
+                }
+            })
+            if(isGame) return res.json({message : "Este juego ya existe"});
+            let newGame = await Videogame.create({
+
+            })
+        }
+    } catch (error) {
+        res.send(error)
+    }
+}) */
+
 
 module.exports = router;

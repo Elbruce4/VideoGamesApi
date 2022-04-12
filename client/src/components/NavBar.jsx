@@ -7,7 +7,7 @@ const NavBar = () => {
             <Link to="/">
                 <h2>Home</h2>
             </Link>
-            <Link to="/">
+            <Link to="/createGame">
                 <h5>Add a game</h5>
             </Link>
             <Link to="/">

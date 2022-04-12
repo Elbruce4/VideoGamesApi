@@ -119,3 +119,27 @@ export const CleanComments = () => {
         payload : null
     }
 }
+
+export const AddNewGame = (data) => {
+    return function(dispatch) {
+        fetch("http://localhost:3001/videogames",{
+            method : "POST",
+            body : JSON.stringify({
+                name : data.name,
+                desc : data.desc,
+                date : data.date,
+                rating : data.rating,
+                platforms :[data.platforms],
+                gender : [data.genre]
+            }),
+            headers : {
+                "Content-type" : "application/json"
+            }
+        })
+        .then(obj => obj.json())
+        .then(obj => dispatch({
+            type : "ADD_NEW_GAME",
+            payload : obj
+        }))
+    }
+}

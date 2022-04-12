@@ -27,6 +27,13 @@ function rootReducer (state = initialState , action) {
                 videogames: action.payload,
                 videogamesBackUp: action.payload
             }
+
+        case "ADD_NEW_GAME":
+            return {
+                ...state,
+                videogames: action.payload,
+                videogamesBackUp: action.payload
+            }
         
         case "ORDER_BY_RATING":
 
