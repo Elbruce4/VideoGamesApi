@@ -154,3 +154,14 @@ export const GetGameById = (id) => {
             }))
     }
 }
+
+export const GetAllUsers = () => {
+    return function (dispatch) {
+        fetch("http://localhost:3001/users")
+            .then(obj => obj.json())
+            .then(obj => dispatch({
+                type : "GET_ALL_USERS",
+                payload : obj
+            }))
+    }
+}

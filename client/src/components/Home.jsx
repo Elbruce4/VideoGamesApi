@@ -2,7 +2,7 @@ import {useEffect , useState} from "react"
 import Games from "./Games";
 import NavBar from "./NavBar";
 import { useDispatch , useSelector } from "react-redux";
-import { GetGames , OrderByRating } from "../Redux/actions";
+import { GetGames , OrderByRating , GetAllUsers } from "../Redux/actions";
 import { Link } from "react-router-dom";
 
 const Home = () => {
@@ -26,6 +26,7 @@ const Home = () => {
 
     useEffect(()=>{
         dispatch(GetGames())
+        dispatch(GetAllUsers())
     },[dispatch])
 
     return (

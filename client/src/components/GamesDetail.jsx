@@ -10,6 +10,7 @@ const GameDetail = () => {
     let dispatch = useDispatch();
     let params = useParams();
     const comments = useSelector(obj => obj.comments);
+    //const users = useSelector(obj => obj.users)
     const game = useSelector(obj => obj.oneGame)
 
     console.log(params.id)
@@ -50,6 +51,9 @@ const GameDetail = () => {
                                 <h4>Comentarios: </h4>
                                 <h3>{obj.title}</h3>
                                 <p>{obj.text}</p>
+                                {
+                                                                    
+                                }
                             </div>
                         )
                     }) :

@@ -3,7 +3,8 @@ const initialState = {
     videogamesBackUp : [],
     comments : [],
     oneGame : {},
-    userLogIn : {}
+    userLogIn : {},
+    users : []
 }
 
 function rootReducer (state = initialState , action) {
@@ -33,6 +34,12 @@ function rootReducer (state = initialState , action) {
                 ...state,
                 videogames: action.payload,
                 videogamesBackUp: action.payload
+            }
+
+        case "GET_ALL_USERS":
+            return {
+                ...state,
+                users : action.payload
             }
         
         case "ORDER_BY_RATING":
