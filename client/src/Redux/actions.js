@@ -66,7 +66,7 @@ export const SearchByName = (value) => {
             .then(obj => obj.json())
             .then(obj => dispatch({
                 payload: obj,
-                type: "GET_ONE_GAME"
+                type: "GET_ONE_GAME_BY_NAME"
             }))
     }
 }
@@ -141,5 +141,16 @@ export const AddNewGame = (data) => {
             type : "ADD_NEW_GAME",
             payload : obj
         }))
+    }
+}
+
+export const GetGameById = (id) => {
+    return function (dispatch) {
+        fetch(`http://localhost:3001/videogame/${id}`)
+            .then(obj => obj.json())
+            .then(obj => dispatch({
+                type : "GET_GAME_BY_ID",
+                payload : obj
+            }))
     }
 }

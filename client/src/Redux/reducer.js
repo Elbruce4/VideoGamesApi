@@ -62,8 +62,15 @@ function rootReducer (state = initialState , action) {
                     videogames: games
                 }
                 
-        case "GET_ONE_GAME": 
+        case "GET_ONE_GAME_BY_NAME": 
             
+            return {
+                ...state,
+                oneGame : action.payload
+            }
+        
+        case "GET_GAME_BY_ID":
+
             return {
                 ...state,
                 oneGame : action.payload

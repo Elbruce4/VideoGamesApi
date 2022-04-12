@@ -186,7 +186,6 @@ router.get("/genre" , async(req,res) => {
     }
 })
 
-// https://api.rawg.io/api/games?search={game}
 
 router.get("/videogame/:idGame" , async (req,res) => {
 
