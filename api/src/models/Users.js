@@ -20,6 +20,9 @@ module.exports = (sequelize) => {
        text : {
            type: DataTypes.TEXT
        },
+       refreshToken : {
+            type: DataTypes.TEXT
+       }
       /*  comments : {
            type: DataTypes.ARRAY(DataTypes.JSON)
        },

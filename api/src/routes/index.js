@@ -2,24 +2,28 @@ const { Router } = require('express');
 const express = require('express');
 const  axios  = require('axios');
 const { Videogame , Gender , Post , User, Comment } = require("../db");
-const { route } = require('next/dist/server/router');
 const bcryptjs = require("bcryptjs");
 const cookieparser = require('cookie-parser');
+const { APIKEY } = process.env;
+const cors = require("cors");
+const {verify} = require("jsonwebtoken")  
+const {createAccessToken , createRefreshToken , sendAccessToken,
+    sendRefreshToken} = require("../token.js")
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
-const APIKEY = "3a27a92bca59469b80d14460d384d0aa";
+//const APIKEY = "3a27a92bca59469b80d14460d384d0aa";
 //GET https://api.rawg.io/api/gems?key=APIKEY
 
 const router = Router();
 
-router.use(cookieparser());
-router.use(express.urlencoded({ extended: true }));
-
-router.use((req, res, next) => {
-    next();
-});
+router.use(cookieparser())
+router.use(cors({
+    orgin : "http://localhost:3000",
+    credentials : true
+}))
+router.use(express.urlencoded({extended:true}))
   
 
 const getDBGames = async () => {
@@ -38,7 +42,7 @@ const getApiGames = async () => {
         const data = await axios.get(`https://api.rawg.io/api/games?key=${APIKEY}`);
         const games = data.data.results.map(obj => {
             return {
-                name : obj.name,
+                name : obj.name,    
                 date : obj.released,
                 rating: obj.rating,
                 platforms : obj.platforms.map(obj2 => obj2.platform.name),
@@ -51,6 +55,7 @@ const getApiGames = async () => {
         return error
     }
 }
+
 
 const getAllGames = async () => {
     try {
@@ -95,6 +100,15 @@ router.get("/" , async (req,res) => {
     try {
         const games = await getAllGames();
         res.send(games)
+    } catch (error) {
+        res.send(error).status(404)
+    }
+})
+
+router.get("/users" , async (req,res) => {
+    try {
+        const users = await User.findAll();
+        res.send(users)
     } catch (error) {
         res.send(error).status(404)
     }
@@ -351,14 +365,23 @@ router.post("/loginUser" , async(req,res)=> {
                 email,
             }
         })
-        if(user){   
-            bcryptjs.compare(password, user.password, function(err, res2) {
+        if(user){ 
+            console.log(user.id)  
+            bcryptjs.compare(password, user.password, async function(err, res2) {
                 if(res2){
-                    console.log(typeof user.name)
-                    return res.cookie("userName" ,user.name).json({
+                    const accesToken = createAccessToken(user.id);
+                    const refreshToken = createRefreshToken(user.id);
+                    await User.update({refreshToken},{
+                        where : {
+                            email,
+                        }
+                    })
+                    sendRefreshToken(res, refreshToken);
+                    sendAccessToken(req,res,accesToken);
+                    /* return res.json({
                         message : "Logueo existoso",
                         user
-                    });
+                    }); */
                 } else {
                     return res.json({
                         message : "Creedenciales incorrectas"
@@ -369,7 +392,7 @@ router.post("/loginUser" , async(req,res)=> {
             res.send("No hay usuarios con ese mail");
         }
     } catch (error) {
-        res.send(error);
+        res.send(error.message);
     }
 })
 
