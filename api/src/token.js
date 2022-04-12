@@ -23,7 +23,7 @@ const sendAccessToken = (req, res, accessToken) => {
 const sendRefreshToken = (res, accessToken) => {
     res.cookie("refreshToken" , accessToken, {
         httpOnly : true,
-        path : "/loginUser"
+        path : "/refresh_token"
     })
 }
 

@@ -4,11 +4,12 @@ const  axios  = require('axios');
 const { Videogame , Gender , Post , User, Comment } = require("../db");
 const bcryptjs = require("bcryptjs");
 const cookieparser = require('cookie-parser');
-const { APIKEY } = process.env;
+const { APIKEY , REFRESH_TOKEN_SECRET } = process.env;
 const cors = require("cors");
 const {verify} = require("jsonwebtoken")  
 const {createAccessToken , createRefreshToken , sendAccessToken,
-    sendRefreshToken} = require("../token.js")
+    sendRefreshToken} = require("../token.js");
+const {isAuth} = require("../auth.js")
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -20,7 +21,7 @@ const router = Router();
 
 router.use(cookieparser())
 router.use(cors({
-    orgin : "http://localhost:3000",
+    origin : "http://localhost:3000",
     credentials : true
 }))
 router.use(express.urlencoded({extended:true}))
@@ -396,28 +397,55 @@ router.post("/loginUser" , async(req,res)=> {
     }
 })
 
-/* router.post("/createGame" , async(req,res) => {
-    try {
-        let {name , desc , date , rating , platforms} = req.body;
-        if (!name || !desc ){
-            res.json({
-                message : "Completar todo los campos"
-            })
-        } else {
-            let isGame = await Videogame.findOne({
-                where : {
-                    name
-                }
-            })
-            if(isGame) return res.json({message : "Este juego ya existe"});
-            let newGame = await Videogame.create({
+router.post("/logout" , async(req,res) => {
+    res.clearCookie("refreshToken" , {path : "/refresh_token"});
+    return res.json({
+        message : "User logged out"
+    })
+})
 
+router.post("/protected" , async(req,res) => {
+    try {
+        const userId = isAuth(req);
+        if(userId){
+            res.json({
+                message : "this is protected data"
             })
         }
     } catch (error) {
-        res.send(error)
+        res.json({
+            error : `${error.message}`
+        })
     }
-}) */
+})
+
+router.post("/refresh_token" , async (req,res) => {
+    const token = req.cookies.refreshToken;
+    if(!token) return res.send({accesToken : "No hay token"});
+    let payload = null;
+    try {
+        payload = verify(token, REFRESH_TOKEN_SECRET)
+    } catch (error) {
+        return res.send({accesToken : "reboto en el segundo"});
+    }
+    let user = await User.findOne({
+        where : {
+            id : payload.userId
+        }
+    });
+    if(!user) return res.send({accesToken : "reboto en el tercero"});
+    if(user.refreshToken !== token) return res.send({accesToken : "reboto en el cuarto"});
+
+    const accesToken = createAccessToken(user.id);
+    const refreshToken = createRefreshToken(user.id);
+    await User.update({refreshToken},{
+        where : {
+            email : user.email,
+        }
+    })
+    res.send(accesToken)
+
+})
 
 
 module.exports = router;
