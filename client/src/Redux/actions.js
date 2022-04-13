@@ -89,7 +89,8 @@ export const Sign = (data) => {
             }),
             headers : {
                 "Content-type" : "application/json"
-            }
+            },
+            credentials : "include"
         })
 }
 
@@ -103,11 +104,29 @@ export const Log = (data) => {
             }),
             headers : {
                 "Content-type" : "application/json"
-            }
+            },
+            credentials : "include"
         })
         .then(obj => obj.json())
         .then(obj => dispatch({
             type : "LOG_IN",
+            payload : obj
+        }))
+    }
+}
+
+export const LogOut = () => {
+    return function (dispatch) {
+        fetch("http://localhost:3001/logout" , {
+            method : "POST",
+            credentials : "include",
+            headers : {
+                "Content-type" : "application/json"
+            }
+        })
+        .then(obj => obj.json())
+        .then(obj => dispatch({
+            type : "LOG_OUT",
             payload : obj
         }))
     }
@@ -165,3 +184,24 @@ export const GetAllUsers = () => {
             }))
     }
 }
+
+export const RefreshToken = () => {
+    return function (dispatch) {
+        fetch("http://localhost:3001/refresh_token" , {
+            method : "POST",
+            headers : {
+                "Content-type" : "application/json"
+            },
+            credentials : "include"
+        })
+        .then(obj => obj.json())
+        .then(obj => {
+            console.log(obj)
+            return dispatch({
+            type : "REFRESH_TOKEN",
+            payload : obj
+            })}
+        )
+    }
+}
+

@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom"
+import { useDispatch } from "react-redux";
+import { LogOut } from "../Redux/actions";
 
 const NavBar = () => {
+
+    let dispatch = useDispatch();
 
     return (
         <div>
@@ -12,6 +16,9 @@ const NavBar = () => {
             </Link>
             <Link to="/">
                 <h5>Foro</h5>
+            </Link>
+            <Link to="/login">
+                <h5 onClick={dispatch(LogOut)}>Log Out</h5>
             </Link>
         </div>
     )

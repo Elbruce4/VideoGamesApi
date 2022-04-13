@@ -2,9 +2,10 @@ import {useEffect , useState} from "react"
 import Games from "./Games";
 import NavBar from "./NavBar";
 import { useDispatch , useSelector } from "react-redux";
-import { GetGames , OrderByRating , GetAllUsers } from "../Redux/actions";
+import { GetGames , OrderByRating , GetAllUsers , RefreshToken } from "../Redux/actions";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+
 
 const Home = () => {
 
@@ -29,12 +30,13 @@ const Home = () => {
     useEffect(()=>{
         dispatch(GetGames())
         dispatch(GetAllUsers())
+        dispatch(RefreshToken())
     },[dispatch])
 
     return (
 
         
-        user.refreshToken ? 
+        user? user.refreshToken ? 
 
         <div>
             <NavBar></NavBar>
@@ -71,6 +73,8 @@ const Home = () => {
         <div>
             {navigate("/login")}
         </div>
+
+        : <h4>Cargando...</h4>
         
     )
 }

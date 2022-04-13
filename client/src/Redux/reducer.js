@@ -110,6 +110,23 @@ function rootReducer (state = initialState , action) {
                     userLogIn : undefined
                 }
             }
+
+        case "LOG_OUT":
+
+            return {
+                ...state,
+                userLogIn : undefined
+            }
+        
+        case "REFRESH_TOKEN":
+
+            return {
+                ...state,
+                userLogIn : {
+                    ...state.userLogIn,
+                    refreshToken : action.payload
+                }
+            }
         
         default:
             return {
