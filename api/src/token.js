@@ -13,10 +13,11 @@ const createRefreshToken = userId => {
     })
 }
 
-const sendAccessToken = (req, res, accessToken) => {
+const sendAccessToken = (req, res, accessToken, user) => {
     res.send({
         accessToken,
-        email : req.body.email
+        user,
+        message : "Logueo existoso"
     })
 }
 

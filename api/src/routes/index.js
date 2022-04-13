@@ -378,7 +378,7 @@ router.post("/loginUser" , async(req,res)=> {
                         }
                     })
                     sendRefreshToken(res, refreshToken);
-                    sendAccessToken(req,res,accesToken);
+                    sendAccessToken(req,res,accesToken , user);
                     /* return res.json({
                         message : "Logueo existoso",
                         user

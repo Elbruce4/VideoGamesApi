@@ -104,14 +104,12 @@ function rootReducer (state = initialState , action) {
                     ...state,
                     userLogIn : action.payload.user
                 }
-            } else if (action.payload.message === "Creedenciales incorrectas"){
+            } else {
                 return {
                     ...state,
                     userLogIn : undefined
                 }
             }
-
-        break;
         
         default:
             return {

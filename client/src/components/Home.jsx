@@ -4,6 +4,7 @@ import NavBar from "./NavBar";
 import { useDispatch , useSelector } from "react-redux";
 import { GetGames , OrderByRating , GetAllUsers } from "../Redux/actions";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
 
@@ -12,6 +13,7 @@ const Home = () => {
     const games = useSelector(obj => obj.videogames);
     const user = useSelector(obj => obj.userLogIn)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     console.log(user)
 
     const ratingFilter = (e) => {
@@ -30,6 +32,10 @@ const Home = () => {
     },[dispatch])
 
     return (
+
+        
+        user.refreshToken ? 
+
         <div>
             <NavBar></NavBar>
             {
@@ -59,6 +65,13 @@ const Home = () => {
                 "Cargando..."
             }
         </div>
+
+        :
+        
+        <div>
+            {navigate("/login")}
+        </div>
+        
     )
 }
 
