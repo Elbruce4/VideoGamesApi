@@ -3,6 +3,7 @@ import { useEffect } from "react"
 import { Link } from "react-router-dom";
 import { useDispatch , useSelector } from "react-redux"
 import { GetComments , CleanComments , GetGameById } from "../Redux/actions.js";
+import UserComment from "./UserWhoComment.jsx";
 
 
 const GameDetail = () => {
@@ -51,9 +52,7 @@ const GameDetail = () => {
                                 <h4>Comentarios: </h4>
                                 <h3>{obj.title}</h3>
                                 <p>{obj.text}</p>
-                                {
-                                                                    
-                                }
+                                <UserComment id={obj.userId}/>
                             </div>
                         )
                     }) :
