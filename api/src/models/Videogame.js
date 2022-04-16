@@ -28,6 +28,10 @@ module.exports = (sequelize) => {
     platforms: {
       type : DataTypes.ARRAY(DataTypes.STRING) 
     },
+    createnOnDb : {
+      type : DataTypes.BOOLEAN,
+      defaultValue: false
+    }
     
     
   });

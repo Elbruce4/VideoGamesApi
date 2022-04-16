@@ -165,7 +165,8 @@ router.post("/videogames" , async(req,res) => {
             desc,
             date,
             rating,
-            platforms
+            platforms,
+            createnOnDb : true
         });
         if(newGame){
             gender.map(async obj => 
@@ -428,12 +429,15 @@ router.post("/refresh_token" , async (req,res) => {
     } catch (error) {
         return res.send({accesToken : "reboto en el segundo"});
     }
+    console.log("payload" , payload)
     let user = await User.findOne({
         where : {
             id : payload.userId
         }
     });
     if(!user) return res.send({accesToken : "reboto en el tercero"});
+    console.log("toke" , token)
+    console.log("userToken" , user.refreshToken)
     if(user.refreshToken !== token) return res.send({accesToken : "reboto en el cuarto"});
 
     const accesToken = createAccessToken(user.id);

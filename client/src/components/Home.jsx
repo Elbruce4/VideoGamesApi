@@ -2,7 +2,12 @@ import {useEffect , useState} from "react"
 import Games from "./Games";
 import NavBar from "./NavBar";
 import { useDispatch , useSelector } from "react-redux";
-import { GetGames , OrderByRating , GetAllUsers , RefreshToken } from "../Redux/actions";
+import { GetGames, 
+         OrderByRating , 
+         GetAllUsers , 
+         RefreshToken , 
+         OrderGameByName , 
+         OrderByCreated  } from "../Redux/actions";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -21,6 +26,22 @@ const Home = () => {
 
         dispatch(OrderByRating(e.target.value));
         setRefresh(!refresh)
+    }
+
+    const orderByName = (e) => {
+        console.log(e.target.value)
+        dispatch(OrderGameByName(e.target.value));
+        setRefresh(!refresh);
+    }
+
+    const orderByCreation = (e) => {
+        dispatch(OrderByCreated(e.target.value));
+        setRefresh(!refresh);
+    }
+
+    const banFilters = () => {
+        dispatch(GetGames());
+        setRefresh(!refresh);
     }
 
     const handleSearch = (e) => {
@@ -46,6 +67,21 @@ const Home = () => {
                     <option value="best">Best Rating</option>
                     <option value="worst">Worst Rating</option>
                 </select>
+            }
+            {
+                <select onClick={orderByName}>
+                    <option value="top">A-Z</option>
+                    <option value="bottom">Z-A</option>
+                </select>
+            }
+            {
+                <select onClick={orderByCreation}>
+                    <option value="db">Created on DB</option>
+                    <option value="api">Created on API</option>
+                </select>
+            }
+            {
+                <button onClick={banFilters}>Ban all filters</button>
             }
             {
                 <div>

@@ -41,6 +41,31 @@ function rootReducer (state = initialState , action) {
                 ...state,
                 users : action.payload
             }
+
+        case "ORDER_BY_NAME":
+
+            if(action.payload === "top") {
+                let games = state.videogamesBackUp.sort((a,b)=> {
+                    if(a.name > b.name) return 1;
+                    if(b.name > a.name) return -1;
+                    return 0
+                })
+                return {
+                    ...state,
+                    videogames : games
+                }
+                
+            } else {
+                let games = state.videogamesBackUp.sort((a,b)=> {
+                    if(a.name > b.name) return -1;
+                    if(b.name > a.name) return 1;
+                    return 0
+                })
+                return {
+                    ...state,
+                    videogames : games
+                }
+            }
         
         case "ORDER_BY_RATING":
 
@@ -68,6 +93,22 @@ function rootReducer (state = initialState , action) {
                     ...state,
                     videogames: games
                 }
+
+        case "ORDER_BY_CREATED":
+
+            if(action.payload === "db") {
+                let games = state.videogamesBackUp.filter(obj => obj.createnOnDb === true);
+                return {
+                    ...state,
+                    videogames : games
+                }
+            } else {
+                let games = state.videogamesBackUp.filter(obj => obj.createnOnDb === false);
+                return {
+                    ...state,
+                    videogames : games
+                }
+            }
                 
         case "GET_ONE_GAME_BY_NAME": 
             

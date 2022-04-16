@@ -59,6 +59,21 @@ export const OrderByRating = (value) => {
     }
 }
 
+export const OrderGameByName = (value) => {
+    return {
+        type : "ORDER_BY_NAME",
+        payload: value
+    }
+}
+
+export const OrderByCreated = value => {
+    return {
+        type : "ORDER_BY_CREATED",
+        payload: value
+    }
+}
+
+
 export const SearchByName = (value) => {
     return function (dispatch){
         console.log(value)
