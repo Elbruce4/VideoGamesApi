@@ -133,6 +133,20 @@ function rootReducer (state = initialState , action) {
                 genre : action.payload
             }
 
+        case "FILTER_BY_GENRE":
+
+            console.log(action.payload)
+            let games2 = state.videogamesBackUp.filter(obj => {
+                return obj.genders.map(obj2 => obj2.name).includes(action.payload)
+            })
+
+            console.log("juegos",games2)
+
+            return {
+                ...state,
+                videogames : games2
+            }
+
         case "CLEAN_ONE_GAME":
 
             return {

@@ -8,7 +8,8 @@ import {GetGames,
         RefreshToken , 
         OrderGameByName , 
         OrderByCreated,
-        GetGenres
+        GetGenres,
+        FilterGenre
           } from "../Redux/actions";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -47,6 +48,11 @@ const Home = () => {
         setRefresh(!refresh);
     }
 
+    const filterByGenre = (e) => {
+        dispatch(FilterGenre(e.target.value));
+        setRefresh(!refresh);
+    }
+
     const handleSearch = (e) => {
         setSearch(e.target.value)
     }
@@ -55,7 +61,7 @@ const Home = () => {
         dispatch(GetGames());
         dispatch(GetAllUsers());
         dispatch(RefreshToken());
-        dispatch(GetGenres())
+        dispatch(GetGenres());
     },[dispatch])
 
     return (
@@ -65,9 +71,9 @@ const Home = () => {
 
         <div>
             <NavBar></NavBar>
-            <select>
+            <select onClick={filterByGenre}>
                 {
-                    genres && genres.map((obj,index) => <option key={index}>{obj}</option>)
+                    genres && genres.map((obj,index) => <option key={index} value={obj}>{obj}</option>)
                 }
             </select>
             {

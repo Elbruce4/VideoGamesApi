@@ -237,3 +237,9 @@ export const GetGenres = () => {
     }
 }
 
+export const FilterGenre = value => {
+    return {
+        payload: value,
+        type : "FILTER_BY_GENRE"
+    }
+}
