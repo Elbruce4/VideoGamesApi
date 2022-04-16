@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom"
 import { useDispatch , useSelector } from "react-redux"
 import { useEffect } from "react"
-import { SearchByName , ClearState } from "../Redux/actions"
+import { SearchByName , ClearState, CleanOneGame } from "../Redux/actions"
 
 const OneGame = () => {
 
@@ -17,7 +17,10 @@ const OneGame = () => {
     },[dispatch , params.game])
 
     useEffect(()=>{
-        return () => dispatch(ClearState());
+        return () => {
+            dispatch(ClearState());
+            dispatch(CleanOneGame())
+        };
     },[dispatch]);
 
     return (
@@ -29,7 +32,7 @@ const OneGame = () => {
                         <h4>{game.desc}</h4>
                     </div>
                     :
-                <h2>Cargando...</h2>
+                game === null || game === undefined ? <h2>No hay juego con ese nombre</h2> : <h2>Cargando...</h2>
             }
         </div>
     )

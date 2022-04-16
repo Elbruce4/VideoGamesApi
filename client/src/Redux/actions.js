@@ -76,7 +76,6 @@ export const OrderByCreated = value => {
 
 export const SearchByName = (value) => {
     return function (dispatch){
-        console.log(value)
         fetch("http://localhost:3001/videogames/" + value)
             .then(obj => obj.json())
             .then(obj => dispatch({
@@ -154,6 +153,13 @@ export const CleanComments = () => {
     }
 }
 
+export const CleanOneGame = () => {
+    return {
+        type: "CLEAN_ONE_GAME",
+        payload : null
+    }
+}
+
 export const AddNewGame = (data) => {
     return function(dispatch) {
         fetch("http://localhost:3001/videogames",{
@@ -217,6 +223,17 @@ export const RefreshToken = () => {
             payload : obj
             })}
         )
+    }
+}
+
+export const GetGenres = () => {
+    return function (dispatch) {
+        fetch("http://localhost:3001/genre")
+            .then(obj => obj.json())
+            .then(obj => dispatch({
+                type : "GET_GENRES",
+                payload : obj
+            }))
     }
 }
 

@@ -4,7 +4,8 @@ const initialState = {
     comments : [],
     oneGame : {},
     userLogIn : {},
-    users : []
+    users : [],
+    genre: []
 }
 
 function rootReducer (state = initialState , action) {
@@ -112,9 +113,31 @@ function rootReducer (state = initialState , action) {
                 
         case "GET_ONE_GAME_BY_NAME": 
             
+            console.log(action.payload)
+            if(action.payload.desc){
+                return {
+                    ...state,
+                    oneGame : action.payload
+                }
+            } else {
+                return {
+                    ...state,
+                    oneGame : null
+                }
+            }
+
+        case "GET_GENRES":
+
             return {
                 ...state,
-                oneGame : action.payload
+                genre : action.payload
+            }
+
+        case "CLEAN_ONE_GAME":
+
+            return {
+                ...state,
+                oneGame : {esta : false}
             }
         
         case "GET_GAME_BY_ID":

@@ -2,12 +2,14 @@ import {useEffect , useState} from "react"
 import Games from "./Games";
 import NavBar from "./NavBar";
 import { useDispatch , useSelector } from "react-redux";
-import { GetGames, 
-         OrderByRating , 
-         GetAllUsers , 
-         RefreshToken , 
-         OrderGameByName , 
-         OrderByCreated  } from "../Redux/actions";
+import {GetGames, 
+        OrderByRating , 
+        GetAllUsers , 
+        RefreshToken , 
+        OrderGameByName , 
+        OrderByCreated,
+        GetGenres
+          } from "../Redux/actions";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -17,7 +19,8 @@ const Home = () => {
     const [search , setSearch] = useState("")
     const [refresh , setRefresh] = useState(false)
     const games = useSelector(obj => obj.videogames);
-    const user = useSelector(obj => obj.userLogIn)
+    const user = useSelector(obj => obj.userLogIn);
+    const genres = useSelector(obj => obj.genre)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     console.log(user)
@@ -49,9 +52,10 @@ const Home = () => {
     }
 
     useEffect(()=>{
-        dispatch(GetGames())
-        dispatch(GetAllUsers())
-        dispatch(RefreshToken())
+        dispatch(GetGames());
+        dispatch(GetAllUsers());
+        dispatch(RefreshToken());
+        dispatch(GetGenres())
     },[dispatch])
 
     return (
@@ -61,6 +65,11 @@ const Home = () => {
 
         <div>
             <NavBar></NavBar>
+            <select>
+                {
+                    genres && genres.map((obj,index) => <option key={index}>{obj}</option>)
+                }
+            </select>
             {
                 <select onClick={ratingFilter}>
                     <option value="none">None</option>
@@ -100,7 +109,7 @@ const Home = () => {
                     )
                 })
                 :
-                "Cargando..."
+                games[0]?.message ? <h6>{games[0].message}</h6> : "Cargando..."
             }
         </div>
 

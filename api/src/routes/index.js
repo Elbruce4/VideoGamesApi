@@ -102,7 +102,7 @@ router.get("/" , async (req,res) => {
         const games = await getAllGames();
         res.send(games)
     } catch (error) {
-        res.send(error).status(404)
+        res.json({error: `${error}`})
     }
 })
 
@@ -142,6 +142,9 @@ router.get("/videogames" , async (req,res) => {
             let isGame = games.find(obj => obj.name === name)
             return res.send(isGame);
         }
+        res.json({
+            message : "Ocurrío un problema, vuelve a cargar por favor"
+        })
     } catch (error) {
         res.send(error).status(404)
     }
