@@ -34,8 +34,8 @@ function rootReducer (state = initialState , action) {
         case "ADD_NEW_GAME":
             return {
                 ...state,
-                videogames: action.payload,
-                videogamesBackUp: action.payload
+                videogames: state.videogames.concat(action.payload),
+                videogamesBackUp: state.videogamesBackUp.concat(action.payload)
             }
 
         case "GET_ALL_USERS":

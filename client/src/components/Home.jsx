@@ -13,6 +13,7 @@ import {GetGames,
           } from "../Redux/actions";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Paginado from "./Paginado";
 
 
 const Home = () => {
@@ -23,9 +24,19 @@ const Home = () => {
     const user = useSelector(obj => obj.userLogIn);
     const genres = useSelector(obj => obj.genre);
     const errors = useSelector(obj => obj.errors)
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
-    console.log(user)
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    //paginado:
+    const [gamesxPagina ] = useState(6);
+    const [pagActual , setPaginaActual] = useState(1);
+    const indexUltimoGame = pagActual * gamesxPagina;
+    const indexPrimerGame = indexUltimoGame - gamesxPagina;
+    const gamesActuales = games.slice(indexPrimerGame,indexUltimoGame);
+
+    const paginado = e => {
+        setPaginaActual(e)
+    }
 
     const ratingFilter = (e) => {
 
@@ -109,8 +120,8 @@ const Home = () => {
                 </div>
             }
             {
-                games && games.length > 0 ? 
-                games.map(obj => {
+                gamesActuales && gamesActuales.length > 0 ? 
+                gamesActuales.map(obj => {
                     return (
                         <Games key={obj.id} props={obj}></Games>
                     )
@@ -118,6 +129,8 @@ const Home = () => {
                 :
                 errors ? <h3>{errors}</h3> : <h3>Cargando...</h3>
             }
+            <Paginado paginado={paginado} cantidad={games.length} cantidadXPagina = {6} ></Paginado>
+
         </div>
 
         :

@@ -197,7 +197,7 @@ router.get("/genre" , async(req,res) => {
         let data = await axios.get("https://api.rawg.io/api/genres?key=" + APIKEY);
         let types = data.data.results.map(obj => obj.name);
         types.map(obj => {
-            Gender.create({name :obj})
+            Gender.findOrCreate({where : {name :obj}})
         })
         res.send(types)
     } catch (error) {

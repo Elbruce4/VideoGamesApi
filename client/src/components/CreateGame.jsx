@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch , useSelector } from "react-redux";
 import { AddNewGame } from "../Redux/actions";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 const CreateGame = () => {
 
     const { register, handleSubmit, trigger, formState: { errors } } = useForm();
+    const genres = useSelector(obj => obj.genre)
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const [data,setData] = useState({
@@ -33,8 +34,7 @@ const CreateGame = () => {
         }
     }
 
-    const handleSubmitForm = (e) => {
-        e.preventDefault();
+    const handleSubmitForm = () => {
         dispatch(AddNewGame(data));
         navigate("/home");
     }
@@ -47,8 +47,9 @@ const CreateGame = () => {
                     type="text" 
                     placeholder="Name" 
                     name="name" 
-                    onChange={handleChange}
+                    
                     {...register("name", {
+                        onChange : (e) => handleChange(e),
                         required: {
                           value: true,
                           message: "Nombre requerido",
@@ -73,8 +74,8 @@ const CreateGame = () => {
                     type="text" 
                     placeholder="Desc" 
                     name="desc" 
-                    onChange={handleChange}
                     {...register("desc",{
+                        onChange : (e) => handleChange(e),
                         required:{
                             value:true,
                             message: "Descripción requerida"
@@ -93,7 +94,12 @@ const CreateGame = () => {
                 <label>Platforms</label>
                 <input type="text" placeholder="Platforms" name="platforms" onChange={handleChange}/>
                 <label>Genre</label>
-                <input type="text" placeholder="Genre" name="genre" onChange={handleChange}/>
+                <select >
+                    {
+                        genres ? genres.map((obj , index) => <option id={index} name="genre" onChange={handleChange}>{obj}</option>)
+                         : undefined
+                    }
+                </select>
                 <input type="submit" value="Enviar" />
             </form>
         </div>
