@@ -5,7 +5,8 @@ const initialState = {
     oneGame : {},
     userLogIn : {},
     users : [],
-    genre: []
+    genre: [],
+    errors : "",
 }
 
 function rootReducer (state = initialState , action) {
@@ -99,9 +100,17 @@ function rootReducer (state = initialState , action) {
 
             if(action.payload === "db") {
                 let games = state.videogamesBackUp.filter(obj => obj.createnOnDb === true);
-                return {
-                    ...state,
-                    videogames : games
+                if(games.length > 0){
+                    return {
+                        ...state,
+                        videogames : games 
+                    }
+                } else {
+                    return {
+                        ...state,
+                        videogames: null,
+                        errors: "No hay juegos creados en la DB"
+                    }
                 }
             } else {
                 let games = state.videogamesBackUp.filter(obj => obj.createnOnDb === false);
@@ -137,11 +146,18 @@ function rootReducer (state = initialState , action) {
 
             let games2 = state.videogamesBackUp.filter(obj => {
                 return obj.genders.map(obj2 => obj2.name).includes(action.payload)
-            })
-
-            return {
-                ...state,
-                videogames : games2
+            });
+            if(games2.length > 0){
+                return {
+                    ...state,
+                    videogames : games2
+                }
+            } else {
+                return {
+                    ...state,
+                    videogames: null,
+                    errors: "No hay ningún juego de ese género"
+                }
             }
 
         case "CLEAN_ONE_GAME":

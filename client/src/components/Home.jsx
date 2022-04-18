@@ -21,7 +21,8 @@ const Home = () => {
     const [refresh , setRefresh] = useState(false)
     const games = useSelector(obj => obj.videogames);
     const user = useSelector(obj => obj.userLogIn);
-    const genres = useSelector(obj => obj.genre)
+    const genres = useSelector(obj => obj.genre);
+    const errors = useSelector(obj => obj.errors)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     console.log(user)
@@ -108,14 +109,14 @@ const Home = () => {
                 </div>
             }
             {
-                games.length > 0 ? 
+                games && games.length > 0 ? 
                 games.map(obj => {
                     return (
                         <Games key={obj.id} props={obj}></Games>
                     )
                 })
                 :
-                games[0]?.message ? <h6>{games[0].message}</h6> : "Cargando..."
+                errors ? <h3>{errors}</h3> : <h3>Cargando...</h3>
             }
         </div>
 
