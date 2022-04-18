@@ -122,18 +122,11 @@ function rootReducer (state = initialState , action) {
                 
         case "GET_ONE_GAME_BY_NAME": 
             
-            console.log(action.payload)
-            if(action.payload.desc){
-                return {
-                    ...state,
-                    oneGame : action.payload
-                }
-            } else {
-                return {
-                    ...state,
-                    oneGame : null
-                }
+            return {
+                ...state,
+                oneGame : action.payload
             }
+            
 
         case "GET_GENRES":
 
@@ -164,7 +157,7 @@ function rootReducer (state = initialState , action) {
 
             return {
                 ...state,
-                oneGame : {esta : false}
+                oneGame : {}
             }
         
         case "GET_GAME_BY_ID":

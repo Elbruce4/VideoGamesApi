@@ -32,7 +32,7 @@ const OneGame = () => {
                         <h4>{game.desc}</h4>
                     </div>
                     :
-                game === null || game === undefined ? <h2>No hay juego con ese nombre</h2> : <h2>Cargando...</h2>
+                game.message ? <h2>{game.message}</h2> : <h2>Cargando...</h2>
             }
         </div>
     )

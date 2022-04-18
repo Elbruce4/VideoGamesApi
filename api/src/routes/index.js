@@ -124,7 +124,7 @@ router.get("/videogames/:nameGame" , async(req,res)=> {
         if(gameSelected){
             res.send(gameSelected)
         } else {
-            res.status(404).send("No hay juego con ese nombre")
+            res.status(404).json({message : "No hay juego con ese nombre"})
         }
     } catch (error) {
         res.send(error)
