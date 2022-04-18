@@ -34,9 +34,10 @@ const LogIn = () => {
                 <input 
                     type="text" 
                     name="email" 
-                    onChange={handleChange}
+                   
                     {
                         ...register("email", {
+                            onChange: (e) => handleChange(e),
                             required:{
                                 value:true,
                                 message: "Debe introducir el email"
@@ -60,8 +61,8 @@ const LogIn = () => {
                 <label>Password :</label>
                 <input  type="password" 
                         name="password" 
-                        onChange={handleChange}
                         {...register("password", {
+                            onChange: (e) => handleChange(e),
                             required: {
                               value: true,
                               message: "Contraseña requerida.",

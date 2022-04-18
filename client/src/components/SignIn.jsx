@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 
 const SignIn = () => {
 
+
     const { register, handleSubmit, trigger, formState: { errors } } = useForm();
     const [user , setUser] = useState({
         name : "",
@@ -14,7 +15,8 @@ const SignIn = () => {
     })
     const navigate = useNavigate()
 
-    const handleChange = (e) => {
+    const handleChangeForm = (e) => {
+        console.log(user)
         setUser({
             ...user,
             [e.target.name] : e.target.value
@@ -22,6 +24,7 @@ const SignIn = () => {
     }
 
     const handleSubmitForm = () => {
+        console.log(user)
         Sign(user);
         navigate("/login");
     } 
@@ -34,8 +37,8 @@ const SignIn = () => {
                 <input 
                     type="text" 
                     name="name" 
-                    onChange={handleChange} 
                     {...register("name", {
+                        onChange: (e) => handleChangeForm(e),
                         required: {
                           value: true,
                           message: "name requerid",
@@ -43,33 +46,37 @@ const SignIn = () => {
                       })}
                       onKeyUp={() => {
                         trigger("name");
-                      }}/>
+                      }}
+                      />
                       {errors.name && <p>{errors.name.message}</p>}
                 <br />
                 <label htmlFor="">Last Name:</label>
                 <input 
                     type="text" 
                     name="lastName" 
-                    onChange={handleChange}
-                    {...register("LastName", {
+                   
+                    {...register("lastName", {
+                        onChange: (e) => handleChangeForm(e),
                         required: {
                           value: true,
                           message: "LastName requerido.",
                         },
                       })}
                       onKeyUp={() => {
-                        trigger("LastName");
-                      }}/>
+                        trigger("lastName");
+                      }}
+                      />
                       {
-                          errors.LastName && <p>{errors.LastName.message}</p>
+                          errors.lastName && <p>{errors.lastName.message}</p>
                       }
                 <br />
                 <label htmlFor="">Email:</label>
                 <input 
                     type="text" 
                     name="email" 
-                    onChange={handleChange}
+                   
                     {...register("email", {
+                        onChange: (e) => handleChangeForm(e),
                         required: {
                           value: true,
                           message: "Email requerido.",
@@ -81,15 +88,16 @@ const SignIn = () => {
                       })}
                       onKeyUp={() => {
                         trigger("email");
-                      }}/>
+                      }}
+                      />
                       {errors.email && <p>{errors.email.message}</p>}
                 <br />
                 <label htmlFor="">Password:</label>
                 <input 
                     type="password" 
                     name="password" 
-                    onChange={handleChange}
                     {...register("password", {
+                        onChange: (e) => handleChangeForm(e),
                         required: {
                           value: true,
                           message: "Contraseña requerida.",
@@ -102,7 +110,8 @@ const SignIn = () => {
                       })}
                       onKeyUp={() => {
                         trigger("password");
-                      }}/>
+                      }}
+                      />
                       {errors.password && <p>{errors.password.message}</p>}
                     
                 <br />

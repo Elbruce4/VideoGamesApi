@@ -323,7 +323,7 @@ router.post("/createUser" , async (req,res)=> {
         let {name , lastName , password, email} = req.body;
         if(!name || !lastName || !password || !email) {
 
-            res.json({
+            return res.json({
                 message :
                 "Debe completar todo los campos para crear un nuevo usuario"
             })
