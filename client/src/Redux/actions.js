@@ -243,3 +243,25 @@ export const FilterGenre = value => {
         type : "FILTER_BY_GENRE"
     }
 }
+
+export const GetAllPosts = () => {
+    return function (dispatch) {
+        fetch("http://localhost:3001/getPosts")
+        .then(obj => obj.json())
+        .then(obj => dispatch({
+            type : "GET_ALL_POSTS",
+            payload : obj
+        }))
+    }
+}
+
+export const GetAllPostsComments = () => {
+    return function (dispatch) {
+        fetch("http://localhost:3001/postComments")
+            .then(obj => obj.json())
+            .then(obj => dispatch({
+                type : "GET_ALL_POSTS_COMMENTS",
+                payload : obj
+            }))
+    }
+}

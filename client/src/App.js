@@ -8,10 +8,10 @@ import OneGame from './components/OneGame';
 import LogIn from './components/LogIn';
 import SignIn from './components/SignIn';
 import CreateGame from './components/CreateGame';
+import Foro from './components/Foro';
+import PostsDetail from './components/PostsDetail';
 
 function App() {
-
-
 
   return (
     <div className="App">
@@ -25,6 +25,8 @@ function App() {
           <Route path='/:id/leaveComment' element={<CreateComment />} />
           <Route path='/gameDetail/:game' element={<OneGame />} />
           <Route path='/createGame' element={<CreateGame />} />
+          <Route path='/foro' element={<Foro />} />
+          <Route path='/foro/:postId' element={<PostsDetail />} />
         </Routes>
       </BrowserRouter>
     </div>

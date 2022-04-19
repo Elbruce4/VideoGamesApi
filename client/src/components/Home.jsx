@@ -32,7 +32,7 @@ const Home = () => {
     const [pagActual , setPaginaActual] = useState(1);
     const indexUltimoGame = pagActual * gamesxPagina;
     const indexPrimerGame = indexUltimoGame - gamesxPagina;
-    const gamesActuales = games.slice(indexPrimerGame,indexUltimoGame);
+    const gamesActuales = games?.slice(indexPrimerGame,indexUltimoGame);
 
     const paginado = e => {
         setPaginaActual(e)
@@ -129,7 +129,7 @@ const Home = () => {
                 :
                 errors ? <h3>{errors}</h3> : <h3>Cargando...</h3>
             }
-            <Paginado paginado={paginado} cantidad={games.length} cantidadXPagina = {6} ></Paginado>
+            <Paginado paginado={paginado} cantidad={games?.length} cantidadXPagina = {6} ></Paginado>
 
         </div>
 

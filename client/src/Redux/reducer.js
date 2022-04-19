@@ -7,6 +7,8 @@ const initialState = {
     users : [],
     genre: [],
     errors : "",
+    posts : [],
+    postsComments : []
 }
 
 function rootReducer (state = initialState , action) {
@@ -42,6 +44,20 @@ function rootReducer (state = initialState , action) {
             return {
                 ...state,
                 users : action.payload
+            }
+
+        case "GET_ALL_POSTS":
+
+            return {
+                ...state,
+                posts: action.payload
+            }
+
+        case "GET_ALL_POSTS_COMMENTS":
+
+            return {
+                ...state,
+                postsComments : action.payload
             }
 
         case "ORDER_BY_NAME":
@@ -184,6 +200,8 @@ function rootReducer (state = initialState , action) {
         case "LOG_IN":
 
             if(action.payload.message === "Logueo existoso"){
+                sessionStorage.setItem("AccessToken" , action.payload.accessToken);
+                console.log(action.payload.user)
                 return {
                     ...state,
                     userLogIn : action.payload.user
@@ -203,13 +221,11 @@ function rootReducer (state = initialState , action) {
             }
         
         case "REFRESH_TOKEN":
-
+            
+            sessionStorage.setItem("AccessToken" , action.payload)
             return {
                 ...state,
-                userLogIn : {
-                    ...state.userLogIn,
-                    refreshToken : action.payload
-                }
+                
             }
         
         default:

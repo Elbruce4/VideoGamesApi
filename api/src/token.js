@@ -14,7 +14,7 @@ const createRefreshToken = userId => {
 }
 
 const sendAccessToken = (req, res, accessToken, user) => {
-    res.send({
+    return res.send({
         accessToken,
         user,
         message : "Logueo existoso"
@@ -22,7 +22,7 @@ const sendAccessToken = (req, res, accessToken, user) => {
 }
 
 const sendRefreshToken = (res, accessToken) => {
-    res.cookie("refreshToken" , accessToken, {
+    return res.cookie("refreshToken" , accessToken, {
         httpOnly : true,
         path : "/refresh_token"
     })

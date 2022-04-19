@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const express = require('express');
 const  axios  = require('axios');
-const { Videogame , Gender , Post , User, Comment } = require("../db");
+const { Videogame , Gender , Post , User, Comment , PostComment } = require("../db");
 const bcryptjs = require("bcryptjs");
 const cookieparser = require('cookie-parser');
 const { APIKEY , REFRESH_TOKEN_SECRET } = process.env;
@@ -9,7 +9,7 @@ const cors = require("cors");
 const {verify} = require("jsonwebtoken")  
 const {createAccessToken , createRefreshToken , sendAccessToken,
     sendRefreshToken} = require("../token.js");
-const {isAuth} = require("../auth.js")
+const {isAuth} = require("../auth.js");
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -18,6 +18,8 @@ const {isAuth} = require("../auth.js")
 //GET https://api.rawg.io/api/gems?key=APIKEY
 
 const router = Router();
+
+console.log("PostComments", PostComment)
 
 router.use(cookieparser())
 router.use(cors({
@@ -59,9 +61,10 @@ const getApiGames = async () => {
 
 
 const getAllGames = async () => {
+
     try {
         
-        let arrayGames = []
+        let arrayGames = [];
         let gamesDB = await getDBGames();
         let gamesApi = await getApiGames();
         await gamesApi.map(async obj => {
@@ -293,10 +296,9 @@ router.post("/leaveComment" , async(req,res) => {
 
 router.post("/createPost" , async(req,res) => {
 
-    let {idUser} = req.query;
 
     try {
-        let {title , text} = req.body;
+        let {title , text , idUser} = req.body;
         if(!title || !text){
             return res.status(404).send("Complete los campos para crear el posteo")
         }
@@ -318,9 +320,61 @@ router.post("/createPost" , async(req,res) => {
 
 })
 
+router.get("/getPosts" , async (req,res) => {
+    try {
+        let posts = await Post.findAll();
+        res.send(posts)
+    } catch (error) {
+        res.send(error)
+    }
+})
+
+router.post("/post/comment/:idPost" , async(req,res) => {
+    try {
+        let {idPost} = req.params;
+        let {title , text , idUser} = req.body;
+        console.log(idUser , idPost);
+        if(!title || !text) return res.json({message : "Completa todos los campos para comentar"});
+        let comment = await PostComment.create({
+            title,
+            text
+        })
+        let post = await Post.findOne({
+            where : {
+                id : Number(idPost)
+            }
+        })
+        let user = await User.findOne({
+            where : {
+                id : Number(idUser)
+            }
+        })
+
+        console.log(post);
+
+        await comment.setPost(post);
+        await comment.setUser(user);
+
+        res.send(comment)
+
+    } catch (error) {
+        res.send(error)
+    }
+})
+
+router.get("/postComments" , async(req,res) => {
+    try {
+        let posts = await PostComment.findAll();
+        res.send(posts);
+    } catch (error) {
+        res.send(error)
+    }
+})
+
 router.post("/createUser" , async (req,res)=> {
     try {
         let {name , lastName , password, email} = req.body;
+
         if(!name || !lastName || !password || !email) {
 
             return res.json({
@@ -380,9 +434,16 @@ router.post("/loginUser" , async(req,res)=> {
                         where : {
                             email,
                         }
+                    });
+                    let user2 = await User.findOne({
+                        where : {
+                            email,
+                        }
                     })
+                    console.log("refresh:" , refreshToken)
                     sendRefreshToken(res, refreshToken);
-                    sendAccessToken(req,res,accesToken , user);
+                    sendAccessToken(req, res, accesToken , user2);
+                    console.log("headers:", req.headers)
                     /* return res.json({
                         message : "Logueo existoso",
                         user
@@ -409,6 +470,7 @@ router.post("/logout" , async(req,res) => {
 })
 
 router.post("/protected" , async(req,res) => {
+    console.log(req.headers)
     try {
         const userId = isAuth(req);
         if(userId){

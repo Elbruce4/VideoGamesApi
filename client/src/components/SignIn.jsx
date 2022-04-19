@@ -16,7 +16,6 @@ const SignIn = () => {
     const navigate = useNavigate()
 
     const handleChangeForm = (e) => {
-        console.log(user)
         setUser({
             ...user,
             [e.target.name] : e.target.value
@@ -24,7 +23,6 @@ const SignIn = () => {
     }
 
     const handleSubmitForm = () => {
-        console.log(user)
         Sign(user);
         navigate("/login");
     } 

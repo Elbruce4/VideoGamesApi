@@ -14,7 +14,7 @@ const NavBar = () => {
             <Link to="/createGame">
                 <h5>Add a game</h5>
             </Link>
-            <Link to="/">
+            <Link to="/foro">
                 <h5>Foro</h5>
             </Link>
             <Link to="/login">
