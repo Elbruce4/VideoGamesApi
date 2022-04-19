@@ -12,7 +12,7 @@ const PostsComments = ({data}) => {
 
     return (
         <div>
-            <p>{user?user.name + user.lastName : "Autor anonimo" } </p>
+            <p>{user?user.name + " " + user.lastName : "Autor anonimo" } </p>
             <h5>{data.title}</h5>
             <p>{data.text}</p>
         </div>

@@ -329,10 +329,9 @@ router.get("/getPosts" , async (req,res) => {
     }
 })
 
-router.post("/post/comment/:idPost" , async(req,res) => {
+router.post("/post/comment/" , async(req,res) => {
     try {
-        let {idPost} = req.params;
-        let {title , text , idUser} = req.body;
+        let {title , text , idUser , idPost} = req.body;
         console.log(idUser , idPost);
         if(!title || !text) return res.json({message : "Completa todos los campos para comentar"});
         let comment = await PostComment.create({

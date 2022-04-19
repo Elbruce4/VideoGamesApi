@@ -84,6 +84,13 @@ function rootReducer (state = initialState , action) {
                     videogames : games
                 }
             }
+
+        case "CREATE_NEW_POST_COMMENT":
+
+            return {
+                ...state,
+                postsComments : state.postsComments.concat(action.payload)
+            }
         
         case "ORDER_BY_RATING":
 
@@ -221,7 +228,7 @@ function rootReducer (state = initialState , action) {
             }
         
         case "REFRESH_TOKEN":
-            
+
             sessionStorage.setItem("AccessToken" , action.payload)
             return {
                 ...state,

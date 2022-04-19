@@ -265,3 +265,25 @@ export const GetAllPostsComments = () => {
             }))
     }
 }
+
+export const CreateNewPostComment = (input) => {
+    return function (dispatch){
+        fetch("http://localhost:3001/post/comment",{
+            method : "POST",
+            headers : {
+                "Content-type" : "application/json"
+            },
+            body : JSON.stringify({
+                title : input.title,
+                text : input.text,
+                idUser : input.idUser,
+                idPost : input.idPost
+            })
+        })
+        .then(obj => obj.json())
+        .then(obj => dispatch({
+            type : "CREATE_NEW_POST_COMMENT",
+            payload : obj
+        }))
+    }
+}
