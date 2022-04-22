@@ -448,9 +448,7 @@ router.post("/loginUser" , async(req,res)=> {
                         user
                     }); */
                 } else {
-                    return res.json({
-                        message : "Creedenciales incorrectas"
-                    });
+                    return res.redirect("/loginUser")
                 }
             });
         } else {
@@ -462,7 +460,7 @@ router.post("/loginUser" , async(req,res)=> {
 })
 
 router.post("/logout" , async(req,res) => {
-    res.clearCookie("refreshToken" , {path : "/refresh_token"});
+    res.clearCookie("refreshToken" , {path : "/user/refresh_token"});
     return res.json({
         message : "User logged out"
     })
@@ -484,14 +482,14 @@ router.post("/protected" , async(req,res) => {
     }
 })
 
-router.post("/refresh_token" , async (req,res) => {
+router.post("/user/refresh_token" , async (req,res) => {
     const token = req.cookies.refreshToken;
-    if(!token) return res.send({accesToken : "No hay token"});
+    if(!token) return res.redirect("/loginUser");
     let payload = null;
     try {
         payload = verify(token, REFRESH_TOKEN_SECRET)
     } catch (error) {
-        return res.send({accesToken : "reboto en el segundo"});
+        return res.redirect("/loginUser");
     }
     console.log("payload" , payload)
     let user = await User.findOne({
@@ -499,10 +497,10 @@ router.post("/refresh_token" , async (req,res) => {
             id : payload.userId
         }
     });
-    if(!user) return res.send({accesToken : "reboto en el tercero"});
+    if(!user) return v;
     console.log("toke" , token)
     console.log("userToken" , user.refreshToken)
-    if(user.refreshToken !== token) return res.send({accesToken : "reboto en el cuarto"});
+    if(user.refreshToken !== token) return res.redirect("/loginUser");
 
     const accesToken = createAccessToken(user.id);
     const refreshToken = createRefreshToken(user.id);
@@ -511,8 +509,8 @@ router.post("/refresh_token" , async (req,res) => {
             email : user.email,
         }
     })
-    res.send(accesToken)
-
+    sendRefreshToken(res, refreshToken);
+    sendAccessToken(req, res, accesToken , user);
 })
 
 

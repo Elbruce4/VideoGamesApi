@@ -208,7 +208,7 @@ export const GetAllUsers = () => {
 
 export const RefreshToken = () => {
     return function (dispatch) {
-        fetch("http://localhost:3001/refresh_token" , {
+        fetch("http://localhost:3001/user/refresh_token" , {
             method : "POST",
             headers : {
                 "Content-type" : "application/json"

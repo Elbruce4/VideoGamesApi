@@ -27,6 +27,7 @@ const Home = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+
     //paginado:
     const [gamesxPagina ] = useState(6);
     const [pagActual , setPaginaActual] = useState(1);
@@ -79,7 +80,7 @@ const Home = () => {
     return (
 
         
-        user? user.refreshToken ? 
+        user? user.refreshToken ?
 
         <div>
             <NavBar></NavBar>
@@ -133,11 +134,11 @@ const Home = () => {
 
         </div>
 
-        :
+        : 
         
-        <div>
-            {navigate("/login")}
-        </div>
+            <div>
+                {navigate("/login")}
+            </div>
 
         : <h4>Cargando...</h4>
         

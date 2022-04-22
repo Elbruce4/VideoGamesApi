@@ -6,6 +6,10 @@ const NavBar = () => {
 
     let dispatch = useDispatch();
 
+    const logOutUser = () => {
+        dispatch(LogOut())
+    }
+
     return (
         <div>
             <Link to="/">
@@ -18,7 +22,7 @@ const NavBar = () => {
                 <h5>Foro</h5>
             </Link>
             <Link to="/login">
-                <h5 onClick={dispatch(LogOut)}>Log Out</h5>
+                <h5 onClick={logOutUser}>Log Out</h5>
             </Link>
         </div>
     )

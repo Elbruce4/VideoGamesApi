@@ -222,6 +222,7 @@ function rootReducer (state = initialState , action) {
 
         case "LOG_OUT":
 
+            
             return {
                 ...state,
                 userLogIn : undefined
@@ -232,9 +233,9 @@ function rootReducer (state = initialState , action) {
             sessionStorage.setItem("AccessToken" , action.payload)
             return {
                 ...state,
-                
+                userLogIn : action.payload.user
             }
-        
+
         default:
             return {
                 ...state
