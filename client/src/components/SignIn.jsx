@@ -1,7 +1,8 @@
 import {useState} from "react";
 import { Sign } from "../Redux/actions";
-import { useNavigate } from "react-router-dom";
+import { useNavigate , Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { SignForm , Input , Bottom , Title , LinkLogIn} from "../Styles/SignIn"
 
 const SignIn = () => {
 
@@ -28,11 +29,12 @@ const SignIn = () => {
     } 
 
     return (
-        <div>
-            <form onSubmit={handleSubmit(handleSubmitForm)}>
+      <div>
+            <Title>Crea tu usuario.</Title>
+            <SignForm onSubmit={handleSubmit(handleSubmitForm)}>
 
                 <label htmlFor="">Name:</label>
-                <input 
+                <Input 
                     type="text" 
                     name="name" 
                     {...register("name", {
@@ -49,7 +51,7 @@ const SignIn = () => {
                       {errors.name && <p>{errors.name.message}</p>}
                 <br />
                 <label htmlFor="">Last Name:</label>
-                <input 
+                <Input 
                     type="text" 
                     name="lastName" 
                    
@@ -69,7 +71,7 @@ const SignIn = () => {
                       }
                 <br />
                 <label htmlFor="">Email:</label>
-                <input 
+                <Input 
                     type="text" 
                     name="email" 
                    
@@ -91,7 +93,7 @@ const SignIn = () => {
                       {errors.email && <p>{errors.email.message}</p>}
                 <br />
                 <label htmlFor="">Password:</label>
-                <input 
+                <Input 
                     type="password" 
                     name="password" 
                     {...register("password", {
@@ -113,10 +115,13 @@ const SignIn = () => {
                       {errors.password && <p>{errors.password.message}</p>}
                     
                 <br />
-                <input type="submit" value="Registrarse" />
+                <Bottom type="submit" value="Registrarse" />
 
-            </form>
-        </div>
+            </SignForm>
+            <Link to="/logIn">
+              <LinkLogIn>¿Ya tenes tu cuenta?</LinkLogIn>
+            </Link>
+      </div>
     )
 }
 

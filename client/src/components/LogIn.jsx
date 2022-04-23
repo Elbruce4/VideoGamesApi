@@ -1,8 +1,9 @@
 import {useState} from "react";
 import { Log } from "../Redux/actions";
 import { useDispatch } from "react-redux";
-import {useNavigate} from "react-router-dom";
+import { useNavigate , Link} from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { Form , LinkSignIn , Title , Input , Bottom } from "../Styles/LogIn";
 
 const LogIn = () => {
     
@@ -28,10 +29,11 @@ const LogIn = () => {
 
     return (
         <div>
-            <form onSubmit={handleSubmit(hanldeSubmitForm)}>
+            <Title>Ingresa con tu usuario.</Title>
+            <Form onSubmit={handleSubmit(hanldeSubmitForm)}>
 
                 <label>Email :</label>
-                <input 
+                <Input 
                     type="text" 
                     name="email" 
                    
@@ -59,7 +61,7 @@ const LogIn = () => {
                 
                 <br />
                 <label>Password :</label>
-                <input  type="password" 
+                <Input  type="password" 
                         name="password" 
                         {...register("password", {
                             onChange: (e) => handleChange(e),
@@ -80,9 +82,12 @@ const LogIn = () => {
                         errors.password && <h4>{errors.password.message}</h4>
                     }
                 <br />
-                <input type="submit" value="Loguearse" />
+                <Bottom type="submit" value="Loguearse" />
 
-            </form>
+            </Form>
+            <Link to="/signIn">
+                <LinkSignIn>¿Aún no tiene cuenta?</LinkSignIn>
+            </Link>
         </div>
     )
 }
