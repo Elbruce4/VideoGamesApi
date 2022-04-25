@@ -308,3 +308,16 @@ export const CreateNewPost = (input) => {
         }))
     }
 }
+
+export const DeletePost = (id) => {
+    return function (dispatch) {
+        fetch("http://localhost:3001/deletePost",{
+            method: "DELETE",
+            headers : {
+                "id" : id
+            }
+        })
+        .then(obj => obj.json())
+        .then(obj => dispatch({}))
+    }
+}

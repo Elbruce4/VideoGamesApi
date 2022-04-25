@@ -329,6 +329,21 @@ router.get("/getPosts" , async (req,res) => {
     }
 })
 
+router.delete("/deletePost" , async (req,res) => {
+    try {
+        let {id} = req.headers;
+        console.log(id);
+        await Post.destroy({
+            where : {
+                id
+            }
+        })
+        res.send("Posts eliminado con exito");
+    } catch (error) {
+        res.send(error)
+    }
+})
+
 router.post("/post/comment/" , async(req,res) => {
     try {
         let {title , text , idUser , idPost} = req.body;

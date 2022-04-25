@@ -14,6 +14,7 @@ const Posts = ({data}) => {
             <Link to= {"/foro/" + data.id}>
                 <button >ver</button>
             </Link>
+            
         </div>
     )
 }

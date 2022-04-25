@@ -1,6 +1,6 @@
 import { useSelector , useDispatch } from "react-redux"
 import { useEffect , useState } from "react"
-import { GetAllPostsComments , GetAllPosts , CreateNewPostComment } from "../Redux/actions";
+import { GetAllPostsComments , GetAllPosts , CreateNewPostComment , DeletePost } from "../Redux/actions";
 import { useParams , useNavigate } from "react-router-dom";
 import PostsComments from "./PostsComments";
 import { useForm } from "react-hook-form";
@@ -31,7 +31,13 @@ const PostsDetail = () => {
 
     //Traer a los usuarios que realizaron cada posteo
     let users = useSelector(obj => obj.users);
-    let user = users.find(obj => obj.id === OnePost.userId)
+    let user = users.find(obj => obj.id === OnePost.userId);
+
+    const deletePosts = () => {
+        dispatch(DeletePost(params.postId));
+        alert("Post eliminado");
+        navigate("/home");
+    }
 
     const handleChange = e => {
         console.log(input)
@@ -54,6 +60,9 @@ const PostsDetail = () => {
 
     return (
         <div>
+            {
+               userLogueado.id === OnePost.userId ? <button onClick={deletePosts}>Eliminar Post</button> : undefined
+            }
             {
                 <div>
                     <p>{user?.name} {user?.lastName}</p>
