@@ -9,6 +9,7 @@ export const Div = styled.div`
     bottom: 0;
     display: flex;
     justify-content: space-between;
+    position: relative;
 `
 
 export const Text = styled.p`

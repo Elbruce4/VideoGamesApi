@@ -287,3 +287,24 @@ export const CreateNewPostComment = (input) => {
         }))
     }
 }
+
+export const CreateNewPost = (input) => {
+    return function (dispatch) {
+        fetch("http://localhost:3001/createPost",{
+            method : "POST",
+            headers : {
+                "Content-type" : "application/json"
+            },
+            body : JSON.stringify({
+                title: input.title,
+                text: input.text,
+                idUser: input.userId
+            })
+        })
+        .then(obj => obj.json())
+        .then(obj => dispatch({
+            type : "CREATE_NEW_POST",
+            payload : obj
+        }))
+    }
+}

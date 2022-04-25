@@ -236,6 +236,13 @@ function rootReducer (state = initialState , action) {
                 userLogIn : action.payload.user
             }
 
+        case "CREATE_NEW_POST":
+
+            return {
+                ...state,
+                posts : state.posts.concat(action.payload)
+            }
+
         default:
             return {
                 ...state
