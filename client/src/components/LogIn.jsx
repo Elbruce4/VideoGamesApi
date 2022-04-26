@@ -3,7 +3,7 @@ import { Log } from "../Redux/actions";
 import { useDispatch } from "react-redux";
 import { useNavigate , Link} from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { Form , LinkSignIn , Title , Input , Bottom } from "../Styles/LogIn";
+import { Form , LinkSignIn , Title , Input , Bottom , Label } from "../Styles/LogIn";
 
 const LogIn = () => {
     
@@ -32,7 +32,7 @@ const LogIn = () => {
             <Title>Ingresa con tu usuario.</Title>
             <Form onSubmit={handleSubmit(hanldeSubmitForm)}>
 
-                <label>Email :</label>
+                <Label>Email :</Label>
                 <Input 
                     type="text" 
                     name="email" 
@@ -60,7 +60,7 @@ const LogIn = () => {
                     }
                 
                 <br />
-                <label>Password :</label>
+                <Label>Password :</Label>
                 <Input  type="password" 
                         name="password" 
                         {...register("password", {

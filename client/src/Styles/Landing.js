@@ -12,7 +12,7 @@ export const LandingDiv = styled.div`
 `
 
 export const Bottom = styled.button`
-    background-color: #FF8BA7;
+    background-color: #eebbc3;
     color: white;
     border-radius: 5px;
     margin: 5px;
@@ -31,7 +31,7 @@ export const Div = styled.div`
 export const Ptext = styled.p`
     width: 400px;
     text-align: center;
-    color: #33272A;
+    color: #FFFFFE;
 
 `
 

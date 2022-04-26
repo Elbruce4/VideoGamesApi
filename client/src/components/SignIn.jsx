@@ -2,7 +2,7 @@ import {useState} from "react";
 import { Sign } from "../Redux/actions";
 import { useNavigate , Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { SignForm , Input , Bottom , Title , LinkLogIn} from "../Styles/SignIn"
+import { SignForm , Input , Bottom , Title , LinkLogIn, Label} from "../Styles/SignIn"
 
 const SignIn = () => {
 
@@ -33,7 +33,7 @@ const SignIn = () => {
             <Title>Crea tu usuario.</Title>
             <SignForm onSubmit={handleSubmit(handleSubmitForm)}>
 
-                <label htmlFor="">Name:</label>
+                <Label htmlFor="">Name:</Label>
                 <Input 
                     type="text" 
                     name="name" 
@@ -50,7 +50,7 @@ const SignIn = () => {
                       />
                       {errors.name && <p>{errors.name.message}</p>}
                 <br />
-                <label htmlFor="">Last Name:</label>
+                <Label htmlFor="">Last Name:</Label>
                 <Input 
                     type="text" 
                     name="lastName" 
@@ -70,7 +70,7 @@ const SignIn = () => {
                           errors.lastName && <p>{errors.lastName.message}</p>
                       }
                 <br />
-                <label htmlFor="">Email:</label>
+                <Label htmlFor="">Email:</Label>
                 <Input 
                     type="text" 
                     name="email" 
@@ -92,7 +92,7 @@ const SignIn = () => {
                       />
                       {errors.email && <p>{errors.email.message}</p>}
                 <br />
-                <label htmlFor="">Password:</label>
+                <Label htmlFor="">Password:</Label>
                 <Input 
                     type="password" 
                     name="password" 

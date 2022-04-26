@@ -1,4 +1,4 @@
-import { Div , Text} from "../Styles/Footer"
+import { Div , Text , P , Span} from "../Styles/Footer"
 import SocialList from "./SocialList"
 
 const Footer = () => {
@@ -7,8 +7,8 @@ const Footer = () => {
         <Div>
 
             <Text>
-                Hecho con <span>❤️</span> por Bruno Lococo{" "}
-                {new Date().getFullYear()}
+                <P>Hecho con <Span>❤️</Span> por Bruno Lococo{" "}
+                {new Date().getFullYear()}</P>
             </Text>
             <SocialList></SocialList>
         </Div>

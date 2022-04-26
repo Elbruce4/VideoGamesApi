@@ -11,7 +11,7 @@ export const SignForm = styled.form`
 export const Input = styled.input`
     width: 250px;
     height: 20px;
-    background-color: #FF8BA7;
+    background-color: #eebbc3;
     border-radius: 3px;
     margin-top: 1px;
     :hover{
@@ -27,8 +27,14 @@ export const Bottom = styled.input`
 
 export const Title = styled.h2`
     margin-right: 20px;
+    color: #fffffe;
 `
 
 export const LinkLogIn = styled.p`
     margin-left: 55px;
+    color: #fffffe;
+`
+
+export const Label = styled.label`
+    color: #fffffe;
 `
