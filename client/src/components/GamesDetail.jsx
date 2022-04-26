@@ -11,7 +11,6 @@ const GameDetail = () => {
     let dispatch = useDispatch();
     let params = useParams();
     const comments = useSelector(obj => obj.comments);
-    //const users = useSelector(obj => obj.users)
     const game = useSelector(obj => obj.oneGame)
 
     console.log(params.id)
@@ -43,16 +42,19 @@ const GameDetail = () => {
                     :
                         undefined
                 }
+                <Link to={"leaveComment"}>
+                            
+                    <button>Dejar nuevo comentarios</button>
+
+                </Link>
                 {
-            
-                    
                     comments && comments.length > 0 ? comments.map(obj => {
                         return (
                             <div key={obj.id}>
                                 <h4>Comentarios: </h4>
                                 <h3>{obj.title}</h3>
                                 <p>{obj.text}</p>
-                                <UserComment id={obj.userId}/>
+                                <UserComment idUser={obj.userId} idGame={obj.videogameId}/>
                             </div>
                         )
                     }) :
@@ -61,11 +63,9 @@ const GameDetail = () => {
 
                     </div>
                 }
-                <Link to={"leaveComment"}>
-                            
-                    <button>Dejar nuevo comentarios</button>
 
-                </Link>
+                <br />
+                <br />
             </div>
             
         </div>

@@ -278,21 +278,22 @@ router.post("/leaveComment" , async(req,res) => {
     }
 });
 
-/* router.post("/createUser" , async(req,res)=> {
-
+router.delete("/deleteComment" , async(req,res) => {
     try {
-        let {name, lastName, password, favs, text} = req.body;
-        if(!name || !lastName || !password) return res.send("Estos campos son obligatorios");
-        let newUser = await User.create({
-            name, lastName, password, favs, text
-        });
-        res.status(404).send(newUser)
+        let {userid , videogameid} = req.headers;
+        console.log("userid" , userid)
+        console.log("videogameid" , videogameid)
+        await Comment.destroy({
+            where : {
+                userId : userid,
+                videogameId : videogameid
+            }
+        })
+        res.send("Comentario eliminado con éxito")
     } catch (error) {
-        res.send(error).status(404)
+        res.send(error)
     }
-
-
-}) */
+})
 
 router.post("/createPost" , async(req,res) => {
 

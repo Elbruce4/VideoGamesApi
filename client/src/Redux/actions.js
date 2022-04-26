@@ -321,3 +321,20 @@ export const DeletePost = (id) => {
         .then(obj => dispatch({}))
     }
 }
+
+export const DeleteComment = (idUser , idGame) => {
+    return function (dispatch) {
+        fetch("http://localhost:3001/deleteComment",{
+            method: "DELETE",
+            headers : {
+                "userid" : idUser,
+                "videogameid" : idGame
+            }
+        })
+        .then(obj => obj.json())
+        .then(obj => dispatch({
+            type : "",
+            payload : undefined
+        }))
+    }
+}
