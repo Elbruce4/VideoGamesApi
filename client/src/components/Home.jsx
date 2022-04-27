@@ -14,6 +14,7 @@ import {GetGames,
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Paginado from "./Paginado";
+import { Div , SelectDiv , Options , Button , DivGames , DivFilters} from "../Styles/Home"
 
 
 const Home = () => {
@@ -82,57 +83,62 @@ const Home = () => {
         
         user? user.refreshToken ?
 
-        <div>
+        <Div>
             <NavBar></NavBar>
-            <select onClick={filterByGenre}>
+            <DivFilters>
+                <SelectDiv onClick={filterByGenre}>
+                    {
+                        genres && genres.map((obj,index) => <Options key={index} value={obj}>{obj}</Options>)
+                    }
+                </SelectDiv>
                 {
-                    genres && genres.map((obj,index) => <option key={index} value={obj}>{obj}</option>)
+                    <SelectDiv onClick={ratingFilter}>
+                        <Options value="none">None</Options>
+                        <Options value="best">Best Rating</Options>
+                        <Options value="worst">Worst Rating</Options>
+                    </SelectDiv>
                 }
-            </select>
-            {
-                <select onClick={ratingFilter}>
-                    <option value="none">None</option>
-                    <option value="best">Best Rating</option>
-                    <option value="worst">Worst Rating</option>
-                </select>
-            }
-            {
-                <select onClick={orderByName}>
-                    <option value="top">A-Z</option>
-                    <option value="bottom">Z-A</option>
-                </select>
-            }
-            {
-                <select onClick={orderByCreation}>
-                    <option value="db">Created on DB</option>
-                    <option value="api">Created on API</option>
-                </select>
-            }
-            {
-                <button onClick={banFilters}>Ban all filters</button>
-            }
-            {
-                <div>
-                    <label htmlFor="">Search by name</label>
-                    <input type="text" onChange={handleSearch} />
-                    <Link to={"/gameDetail/"+ search}>
-                        <button >Search</button>
-                    </Link>
-                </div>
-            }
-            {
-                gamesActuales && gamesActuales.length > 0 ? 
-                gamesActuales.map(obj => {
-                    return (
-                        <Games key={obj.id} props={obj}></Games>
-                    )
-                })
-                :
-                errors ? <h3>{errors}</h3> : <h3>Cargando...</h3>
-            }
+                {
+                    <SelectDiv onClick={orderByName}>
+                        <Options value="top">A-Z</Options>
+                        <Options value="bottom">Z-A</Options>
+                    </SelectDiv>
+                }
+                {
+                    <SelectDiv onClick={orderByCreation}>
+                        <Options value="db">Created on DB</Options>
+                        <Options value="api">Created on API</Options>
+                    </SelectDiv>
+                }
+                {
+                    <Button onClick={banFilters}>Ban all filters</Button>
+                }
+           
+                {
+                    <div>
+                        <label htmlFor="">Search by name</label>
+                        <input type="text" onChange={handleSearch} />
+                        <Link to={"/gameDetail/"+ search}>
+                            <Button >Search</Button>
+                        </Link>
+                    </div>
+                }
+            </DivFilters>
+            <DivGames>
+                {
+                    gamesActuales && gamesActuales.length > 0 ? 
+                    gamesActuales.map(obj => {
+                        return (
+                            <Games key={obj.id} props={obj}></Games>
+                        )
+                    })
+                    :
+                    errors ? <h3>{errors}</h3> : <h3>Cargando...</h3>
+                }
+            </DivGames>
             <Paginado paginado={paginado} cantidad={games?.length} cantidadXPagina = {6} ></Paginado>
 
-        </div>
+        </Div>
 
         : 
         

@@ -1,17 +1,18 @@
 import {Link} from "react-router-dom"
+import { Div , P , H2 , H4 , Button } from "../Styles/Games"
 
 const Games = ({props}) => {
 
     return (
-        <div>
-            <h2>{props.name}</h2>
-            <h4>{props.date}</h4>
-            <h4>{props.rating}</h4>
-            <p>{props.desc}</p>
+        <Div>
+            <H2>{props.name}</H2>
+            <H4>{props.date}</H4>
+            <H4>{props.rating}</H4>
+            <P>{props.desc}</P>
             <Link to={`/${props.id}`}>
-                <button>View Details</button>
+                <Button>View Details</Button>
             </Link>
-        </div>
+        </Div>
     )
 
 }

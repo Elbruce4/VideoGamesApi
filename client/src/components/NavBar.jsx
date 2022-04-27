@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import { useDispatch } from "react-redux";
 import { LogOut } from "../Redux/actions";
+import { Div , H2 , H5 } from "../Styles/NavBar"
 
 const NavBar = () => {
 
@@ -11,20 +12,20 @@ const NavBar = () => {
     }
 
     return (
-        <div>
+        <Div>
             <Link to="/">
-                <h2>Home</h2>
+                <H2>Home</H2>
             </Link>
             <Link to="/createGame">
-                <h5>Add a game</h5>
+                <H5>Add a game</H5>
             </Link>
             <Link to="/foro">
-                <h5>Foro</h5>
+                <H5>Foro</H5>
             </Link>
             <Link to="/login">
-                <h5 onClick={logOutUser}>Log Out</h5>
+                <H5 onClick={logOutUser}>Log Out</H5>
             </Link>
-        </div>
+        </Div>
     )
 }
 
