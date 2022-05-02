@@ -14,7 +14,7 @@ import {GetGames,
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Paginado from "./Paginado";
-import { Div , SelectDiv , Options , Button , DivGames , DivFilters} from "../Styles/Home"
+import { Div , SelectDiv , Options , Button , DivGames , DivFilters , DivContainer , DivSearch} from "../Styles/Home"
 
 
 const Home = () => {
@@ -85,57 +85,60 @@ const Home = () => {
 
         <Div>
             <NavBar></NavBar>
-            <DivFilters>
-                <SelectDiv onClick={filterByGenre}>
+            <DivContainer>
+                <DivFilters>
+                    <SelectDiv onClick={filterByGenre}>
+                        {
+                            genres && genres.map((obj,index) => <Options key={index} value={obj}>{obj}</Options>)
+                        }
+                    </SelectDiv>
                     {
-                        genres && genres.map((obj,index) => <Options key={index} value={obj}>{obj}</Options>)
+                        <SelectDiv onClick={ratingFilter}>
+                            <Options value="none">None</Options>
+                            <Options value="best">Best Rating</Options>
+                            <Options value="worst">Worst Rating</Options>
+                        </SelectDiv>
                     }
-                </SelectDiv>
-                {
-                    <SelectDiv onClick={ratingFilter}>
-                        <Options value="none">None</Options>
-                        <Options value="best">Best Rating</Options>
-                        <Options value="worst">Worst Rating</Options>
-                    </SelectDiv>
-                }
-                {
-                    <SelectDiv onClick={orderByName}>
-                        <Options value="top">A-Z</Options>
-                        <Options value="bottom">Z-A</Options>
-                    </SelectDiv>
-                }
-                {
-                    <SelectDiv onClick={orderByCreation}>
-                        <Options value="db">Created on DB</Options>
-                        <Options value="api">Created on API</Options>
-                    </SelectDiv>
-                }
-                {
-                    <Button onClick={banFilters}>Ban all filters</Button>
-                }
-           
-                {
-                    <div>
-                        <label htmlFor="">Search by name</label>
-                        <input type="text" onChange={handleSearch} />
-                        <Link to={"/gameDetail/"+ search}>
-                            <Button >Search</Button>
-                        </Link>
-                    </div>
-                }
-            </DivFilters>
-            <DivGames>
-                {
-                    gamesActuales && gamesActuales.length > 0 ? 
-                    gamesActuales.map(obj => {
-                        return (
-                            <Games key={obj.id} props={obj}></Games>
-                        )
-                    })
-                    :
-                    errors ? <h3>{errors}</h3> : <h3>Cargando...</h3>
-                }
-            </DivGames>
+                    {
+                        <SelectDiv onClick={orderByName}>
+                            <Options value="top">A-Z</Options>
+                            <Options value="bottom">Z-A</Options>
+                        </SelectDiv>
+                    }
+                    {
+                        <SelectDiv onClick={orderByCreation}>
+                            <Options value="db">Created on DB</Options>
+                            <Options value="api">Created on API</Options>
+                        </SelectDiv>
+                    }
+                    {
+                        <Button onClick={banFilters}>Ban all filters</Button>
+                    }
+            
+                    {
+                        <DivSearch>
+                            <label htmlFor="">Search by name</label>
+                            <input type="text" onChange={handleSearch} />
+                            <Link to={"/gameDetail/"+ search}>
+                                <Button >Search</Button>
+                            </Link>
+                        </DivSearch>
+                    }
+                </DivFilters>
+                <DivGames>
+                    {
+                        gamesActuales && gamesActuales.length > 0 ? 
+                        gamesActuales.map(obj => {
+                            return (
+                                <Games key={obj.id} props={obj}></Games>
+                            )
+                        })
+                        :
+                        errors ? <h3>{errors}</h3> : <h3>Cargando...</h3>
+                    }
+                </DivGames>
+            </DivContainer>
+
             <Paginado paginado={paginado} cantidad={games?.length} cantidadXPagina = {6} ></Paginado>
 
         </Div>

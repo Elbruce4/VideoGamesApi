@@ -24,15 +24,28 @@ export const DivGames = styled.div`
     flex-direction: row;
     justify-content: space-between;
     flex-wrap: wrap;
-    margin-left: 320px;
-    margin-bottom: 300px;
+    margin-left: 50px;
+    margin-bottom: 60px;
+    //width: 80%;
 `
 
 export const DivFilters = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    height: 800px;
+    height: 500px;
     background-color: #121629;
-    width: 20%;
+    width: 175px;
+    padding: 0;
+    border: 0;
+    margin: 0;
+`
+
+export const DivContainer = styled.div`
+    display:  flex;
+    flex-direction: row;
+`
+
+export const DivSearch = styled.div`
+    background-color: #b8c1ec;
 `

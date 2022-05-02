@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 export const Div = styled.div`
     border: solid 1px;
-    width: 30%;
+    width: 300px;
+    height: 260px;
     margin: 5px;
     background-color: #b8c1ec;
 `
