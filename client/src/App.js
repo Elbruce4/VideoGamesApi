@@ -10,12 +10,14 @@ import SignIn from './components/SignIn';
 import CreateGame from './components/CreateGame';
 import Foro from './components/Foro';
 import PostsDetail from './components/PostsDetail';
+import NavBar from './components/NavBar';
 
 function App() {
 
   return (
     <div className="App">
       <BrowserRouter>
+        <NavBar></NavBar>
         <Routes>
           <Route path='/' exact element={<LandingPage/>}/>
           <Route path='/signIn' element={<SignIn/>}/>

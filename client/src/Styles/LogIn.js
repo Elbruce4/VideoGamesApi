@@ -5,7 +5,7 @@ export const Form = styled.form`
     flex-direction: column;
     width: 300px;
     align-items: center;
-    margin-left: 500px;
+    margin-left: 555px;
 `
 
 export const LinkSignIn = styled.p`

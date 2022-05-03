@@ -5,7 +5,7 @@ export const SignForm = styled.form`
     flex-direction: column;
     width: 300px;
     align-items: center;
-    margin-left: 500px;
+    margin-left: 525px;
 `
 
 export const Input = styled.input`
@@ -31,7 +31,7 @@ export const Title = styled.h2`
 `
 
 export const LinkLogIn = styled.p`
-    margin-left: 55px;
+    margin-right: 17px;
     color: #fffffe;
 `
 

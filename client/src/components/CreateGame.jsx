@@ -3,6 +3,10 @@ import { useDispatch , useSelector } from "react-redux";
 import { AddNewGame } from "../Redux/actions";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { Div,
+         Form,
+         Input,
+         InputSubmit } from "../Styles/CreateGame"
 
 const CreateGame = () => {
 
@@ -40,10 +44,10 @@ const CreateGame = () => {
     }
 
     return (
-        <div>
-            <form onSubmit={handleSubmit(handleSubmitForm)}>
+        <Div>
+            <Form onSubmit={handleSubmit(handleSubmitForm)}>
                 <label>Name</label>
-                <input 
+                <Input 
                     type="text" 
                     placeholder="Name" 
                     name="name" 
@@ -70,7 +74,7 @@ const CreateGame = () => {
                           errors.name && <h4>{errors.name.message}</h4>
                       }
                 <label>Desc</label>
-                <input 
+                <Input 
                     type="text" 
                     placeholder="Desc" 
                     name="desc" 
@@ -88,11 +92,11 @@ const CreateGame = () => {
                           errors.desc && <h4>{errors.desc.message}</h4>
                       }
                 <label>Date</label>
-                <input type="text" placeholder="Date" name="date" onChange={handleChange}/>
+                <Input type="text" placeholder="Date" name="date" onChange={handleChange}/>
                 <label>Rating</label>
-                <input type="number" placeholder="Rating" name="rating" onChange={handleChange} />
+                <Input type="number" placeholder="Rating" name="rating" onChange={handleChange} />
                 <label>Platforms</label>
-                <input type="text" placeholder="Platforms" name="platforms" onChange={handleChange}/>
+                <Input type="text" placeholder="Platforms" name="platforms" onChange={handleChange}/>
                 <label>Genre</label>
                 <select >
                     {
@@ -100,9 +104,9 @@ const CreateGame = () => {
                          : undefined
                     }
                 </select>
-                <input type="submit" value="Enviar" />
-            </form>
-        </div>
+                <InputSubmit type="submit" value="Enviar" />
+            </Form>
+        </Div>
     )
 }
 

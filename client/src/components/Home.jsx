@@ -1,6 +1,5 @@
 import {useEffect , useState} from "react"
 import Games from "./Games";
-import NavBar from "./NavBar";
 import { useDispatch , useSelector } from "react-redux";
 import {GetGames, 
         OrderByRating , 
@@ -14,7 +13,8 @@ import {GetGames,
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Paginado from "./Paginado";
-import { Div , SelectDiv , Options , Button , DivGames , DivFilters , DivContainer , DivSearch} from "../Styles/Home"
+import { Div , SelectDiv , PFilters , Label , Input , 
+    Options , Button , DivGames , DivFilters , DivContainer , DivSearch , DivOptions} from "../Styles/Home"
 
 
 const Home = () => {
@@ -84,32 +84,41 @@ const Home = () => {
         user? user.refreshToken ?
 
         <Div>
-            <NavBar></NavBar>
             <DivContainer>
                 <DivFilters>
+                    <PFilters>Filtrar por género</PFilters>
                     <SelectDiv onClick={filterByGenre}>
                         {
                             genres && genres.map((obj,index) => <Options key={index} value={obj}>{obj}</Options>)
                         }
                     </SelectDiv>
                     {
-                        <SelectDiv onClick={ratingFilter}>
-                            <Options value="none">None</Options>
-                            <Options value="best">Best Rating</Options>
-                            <Options value="worst">Worst Rating</Options>
-                        </SelectDiv>
+                        <DivOptions>
+                            <PFilters>Filtrar por rating</PFilters>
+                            <SelectDiv onClick={ratingFilter}>
+                                <Options value="none">None</Options>
+                                <Options value="best">Best Rating</Options>
+                                <Options value="worst">Worst Rating</Options>
+                            </SelectDiv>
+                        </DivOptions>
                     }
                     {
-                        <SelectDiv onClick={orderByName}>
-                            <Options value="top">A-Z</Options>
-                            <Options value="bottom">Z-A</Options>
-                        </SelectDiv>
+                        <DivOptions>
+                            <PFilters>Filtrar por Orden alfabetico</PFilters>
+                            <SelectDiv onClick={orderByName}>
+                                <Options value="top">A-Z</Options>
+                                <Options value="bottom">Z-A</Options>
+                            </SelectDiv>
+                        </DivOptions>
                     }
                     {
-                        <SelectDiv onClick={orderByCreation}>
-                            <Options value="db">Created on DB</Options>
-                            <Options value="api">Created on API</Options>
-                        </SelectDiv>
+                        <DivOptions>
+                            <PFilters>Filtrar por creación</PFilters>
+                            <SelectDiv onClick={orderByCreation}>
+                                <Options value="db">Created on DB</Options>
+                                <Options value="api">Created on API</Options>
+                            </SelectDiv>
+                        </DivOptions>
                     }
                     {
                         <Button onClick={banFilters}>Ban all filters</Button>
@@ -117,8 +126,8 @@ const Home = () => {
             
                     {
                         <DivSearch>
-                            <label htmlFor="">Search by name</label>
-                            <input type="text" onChange={handleSearch} />
+                            <Label htmlFor="">Search by name</Label>
+                            <Input type="text" onChange={handleSearch} />
                             <Link to={"/gameDetail/"+ search}>
                                 <Button >Search</Button>
                             </Link>

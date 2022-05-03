@@ -1,3 +1,4 @@
+import {Li , Div} from "../Styles/Paginado"
 
 const Paginado = ({paginado,cantidad,cantidadXPagina}) => {
 
@@ -8,15 +9,15 @@ const Paginado = ({paginado,cantidad,cantidadXPagina}) => {
     }
 
     return (
-        <div>
+        <Div>
             {
                 array && array.map(obj => {
-                    return <li key={obj} onClick={()=>paginado(obj)}>
+                    return <Li key={obj} onClick={()=>paginado(obj)}>
                         <button> {obj} </button>
-                    </li>
+                    </Li>
                 })
             }
-        </div>
+        </Div>
     )
 }
 
