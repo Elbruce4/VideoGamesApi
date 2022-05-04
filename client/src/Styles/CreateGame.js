@@ -32,3 +32,8 @@ export const InputSubmit = styled.input`
     height: 40px;
     margin-left: 60px;
 `
+
+export const Label = styled.label`
+    margin: 3px;
+    color: white;
+`

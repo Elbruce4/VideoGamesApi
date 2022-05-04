@@ -10,7 +10,7 @@ const Games = ({props}) => {
             <H4>{props.rating}</H4>
             <P>{props.desc}</P>
             <Link to={`/${props.id}`}>
-                <Button>View Details</Button>
+                <Button>Ver comentarios</Button>
             </Link>
         </Div>
     )

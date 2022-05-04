@@ -3,7 +3,9 @@ import { Link } from "react-router-dom"
 import { useEffect } from "react"
 import { DivContainer,
          P,
-         Div
+         Div,
+         Button,
+         H2
 
  } from "../Styles/Posts";      
 import { GetAllUsers } from "../Redux/actions";
@@ -23,9 +25,9 @@ const Posts = ({data}) => {
         <DivContainer>
             <P>{userPost? userPost.name + " " + userPost.lastName : "Autor anonimo" } </P>
             <Div>
-                <h2>{data.title}</h2>
+                <H2>{data.title}</H2>
                 <Link to= {"/foro/" + data.id}>
-                    <button >ver</button>
+                    <Button>ver</Button>
                 </Link>
             </Div>
             

@@ -6,7 +6,8 @@ import { useForm } from "react-hook-form";
 import { Div,
          Form,
          Input,
-         InputSubmit } from "../Styles/CreateGame"
+         InputSubmit,
+         Label } from "../Styles/CreateGame"
 
 const CreateGame = () => {
 
@@ -46,7 +47,7 @@ const CreateGame = () => {
     return (
         <Div>
             <Form onSubmit={handleSubmit(handleSubmitForm)}>
-                <label>Name</label>
+                <Label>Name</Label>
                 <Input 
                     type="text" 
                     placeholder="Name" 
@@ -73,7 +74,7 @@ const CreateGame = () => {
                       {
                           errors.name && <h4>{errors.name.message}</h4>
                       }
-                <label>Desc</label>
+                <Label>Desc</Label>
                 <Input 
                     type="text" 
                     placeholder="Desc" 
@@ -91,13 +92,13 @@ const CreateGame = () => {
                       {
                           errors.desc && <h4>{errors.desc.message}</h4>
                       }
-                <label>Date</label>
+                <Label>Date</Label>
                 <Input type="text" placeholder="Date" name="date" onChange={handleChange}/>
-                <label>Rating</label>
+                <Label>Rating</Label>
                 <Input type="number" placeholder="Rating" name="rating" onChange={handleChange} />
-                <label>Platforms</label>
+                <Label>Platforms</Label>
                 <Input type="text" placeholder="Platforms" name="platforms" onChange={handleChange}/>
-                <label>Genre</label>
+                <Label>Genre</Label>
                 <select >
                     {
                         genres ? genres.map((obj , index) => <option id={index} name="genre" onChange={handleChange}>{obj}</option>)
