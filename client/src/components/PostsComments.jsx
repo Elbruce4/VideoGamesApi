@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux"
 import { useEffect } from "react"
+import { Div , H5 , P  , Ptitle} from "../Styles/PostComents"
 
 const PostsComments = ({data}) => {
 
@@ -11,11 +12,11 @@ const PostsComments = ({data}) => {
     },[])
 
     return (
-        <div>
-            <p>{user?user.name + " " + user.lastName : "Autor anonimo" } </p>
-            <h5>{data.title}</h5>
-            <p>{data.text}</p>
-        </div>
+        <Div>
+            <Ptitle>{user?user.name + " " + user.lastName : "Autor anonimo" } </Ptitle>
+                <H5>{data.title}</H5>
+                <P>{data.text}</P>
+        </Div>
     )
 }
 

@@ -2,10 +2,12 @@ import {useState} from "react";
 import { useParams } from "react-router-dom";
 import { NewComment } from "../Redux/actions";
 import { useDispatch  , useSelector} from "react-redux";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { TextArea , Input , Form , Button} from "../Styles/CreateComments";
 
 const CreateComment = () => {
 
+    let navigate = useNavigate()
     let param = useParams();
     let dispatch = useDispatch();
     let user = useSelector(obj => obj.userLogIn)
@@ -36,17 +38,20 @@ const CreateComment = () => {
             text : " ",
             title : " "
         })
-
+        navigate("/home")
     }
 
     return (
-        <form>
-            <input type="text" placeholder="Title" name="title" onChange={e => handleChange(e)}/>
-            <textarea type="text" placeholder="Comment" name="text" onChange={e => handleChange(e)}/>
+        <Form>
+            <Input type="text" placeholder="Title" name="title" onChange={e => handleChange(e)}/>
+            <TextArea type="text" placeholder="Comment" name="text" onChange={e => handleChange(e)}/>
             
-                <button type="submit" onClick={handleSubmit}> <Link to={"/home"}>Comment</Link> </button>
+                
+                    <Button type="submit" onClick={handleSubmit}>
+                        Comment
+                    </Button>
         
-        </form>
+        </Form>
     )
 }
 

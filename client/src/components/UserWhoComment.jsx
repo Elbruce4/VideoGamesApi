@@ -2,6 +2,7 @@ import {useEffect} from "react"
 import { useDispatch , useSelector } from "react-redux"
 import { GetAllUsers , DeleteComment } from "../Redux/actions";
 import { useNavigate } from "react-router-dom";
+import { CommentsDivName , H4 , Button} from "../Styles/GameDetail";
 
 const UserComment = ({idUser , idGame}) => {
 
@@ -28,13 +29,13 @@ const UserComment = ({idUser , idGame}) => {
     }
 
     return (
-        <div>
-            <h6>{user.name} {user.lastName}</h6>
+        <CommentsDivName>
+            <H4>{user.name} {user.lastName}</H4>
             
             {
-                userLogueado.id === idUser ? <button onClick={() => handleDelete(idUser , idGame)}>Eliminar comentario</button> : undefined
+                userLogueado.id === idUser ? <Button onClick={() => handleDelete(idUser , idGame)}>Eliminar comentario</Button> : undefined
             }
-        </div>
+        </CommentsDivName>
     )
 }
 

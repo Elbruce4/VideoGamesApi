@@ -4,6 +4,22 @@ import { GetAllPostsComments , GetAllPosts , CreateNewPostComment , DeletePost }
 import { useParams , useNavigate } from "react-router-dom";
 import PostsComments from "./PostsComments";
 import { useForm } from "react-hook-form";
+import {    Div,
+            P,
+            H2,
+            InsideDiv,
+            PTitle,
+            DivOutside,
+            DivComments,
+            DivForm,
+            DivButton,
+            CancelNewComment } from "../Styles/PostDetail"
+import { 
+    Form,
+    Input,
+    TextArea,
+    Button } from "../Styles/Foro";
+import {BsPencilSquare} from "react-icons/bs"
 
 const PostsDetail = () => {
 
@@ -12,6 +28,7 @@ const PostsDetail = () => {
     let dispatch = useDispatch();
     let params = useParams();
     let navigate = useNavigate();
+    let [open , setOpen] = useState(false)
     console.log(userLogueado)
     
     let [input , setInput] = useState({
@@ -53,74 +70,89 @@ const PostsDetail = () => {
         navigate("/home");
     }
 
+    const HandleOpen = () => setOpen(!open)
+
     useEffect(()=> {
         dispatch(GetAllPostsComments());
         dispatch(GetAllPosts());
     },[dispatch])
 
+
+
     return (
-        <div>
+        <DivOutside>
+            <DivButton open = {open}>
+                <BsPencilSquare onClick={HandleOpen}/>
+            </DivButton>
+            <DivForm open={open}>
+                <CancelNewComment onClick={HandleOpen}>X</CancelNewComment>
+                {
+                    <Form onSubmit={handleSubmit(handleSubmitForm)}>
+                        <label>Title: </label>
+                        <Input 
+                            type="text" 
+                            name="title" 
+                            placeholder="Title"
+                            {...register("title", {
+                                onChange: (e) => handleChange(e),
+                                required: {
+                                value: true,
+                                message: "title requerido",
+                            },
+                                
+                            })}
+                            onKeyUp={() => {
+                                trigger("title");
+                            }}
+                            />
+                            {errors.title && <p>{errors.title.message}</p> }                           
+                        <label>Comment: </label>
+
+                        <TextArea
+                            type="text" 
+                            name="text" 
+                            placeholder="text" 
+                            {...register("text", {
+                                onChange: (e) => handleChange(e),
+                                required: {
+                                value: true,
+                                message: "text requerido",
+                            },
+                                
+                            })}
+                            onKeyUp={() => {
+                                trigger("text");
+                            }}
+                            />
+                            {errors.text && <p>{errors.text.message}</p> }
+                        <Button type="submit" value="Comentar" />
+                    </Form>
+                }
+            </DivForm>
             {
                userLogueado.id === OnePost.userId ? <button onClick={deletePosts}>Eliminar Post</button> : undefined
             }
             {
-                <div>
-                    <p>{user?.name} {user?.lastName}</p>
-                    <h2>{OnePost?.title}</h2>
-                    <p>{OnePost?.text}</p>
-                </div>
+                <Div>
+                    <PTitle>{user?user.name + " " + user.lastName : "Autor anonimo" } </PTitle>
+                    <InsideDiv>
+                        <H2>{OnePost?.title}</H2>
+                        <P>{OnePost?.text}</P>
+                    </InsideDiv>
+                </Div>
             }
-            {
-                AllComments && AllComments.map(obj => {
+            <DivComments>
+                {
+                    AllComments && AllComments.map(obj => {
 
-                    return  <PostsComments key={obj.id} data={obj}>
-                            </PostsComments>
-                        
-                })
-            }
-            {
-                <form onSubmit={handleSubmit(handleSubmitForm)}>
-                    <label>Title: </label>
-                    <input 
-                        type="text" 
-                        name="title" 
-                        placeholder="Title"
-                        {...register("title", {
-                            onChange: (e) => handleChange(e),
-                            required: {
-                            value: true,
-                            message: "title requerido",
-                        },
+                        return  <PostsComments key={obj.id} data={obj}>
+                                </PostsComments>
                             
-                        })}
-                        onKeyUp={() => {
-                            trigger("title");
-                          }}
-                        />
-                        {errors.title && <p>{errors.title.message}</p> }                           
-                    <label>Comment: </label>
-
-                    <textarea
-                        type="text" 
-                        name="text" 
-                        placeholder="text" 
-                        {...register("text", {
-                            onChange: (e) => handleChange(e),
-                            required: {
-                            value: true,
-                            message: "text requerido",
-                        },
-                            
-                        })}
-                        onKeyUp={() => {
-                            trigger("text");
-                          }}
-                        />
-                        {errors.text && <p>{errors.text.message}</p> }
-                    <input type="submit" value="Comentar" />
-                </form>
-            }
-        </div>
+                    })
+                }
+            </DivComments>
+            
+        </DivOutside>
     )
 }
 
