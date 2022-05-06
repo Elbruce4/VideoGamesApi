@@ -322,13 +322,14 @@ export const DeletePost = (id) => {
     }
 }
 
-export const DeleteComment = (idUser , idGame) => {
+export const DeleteComment = (idUser , idGame , id) => {
     return function (dispatch) {
         fetch("http://localhost:3001/deleteComment",{
             method: "DELETE",
             headers : {
                 "userid" : idUser,
-                "videogameid" : idGame
+                "videogameid" : idGame,
+                "commentid" : id
             }
         })
         .then(obj => obj.json())

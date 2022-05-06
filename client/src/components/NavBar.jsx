@@ -13,7 +13,7 @@ const NavBar = () => {
 
     return (
         <Div>
-            <Link to="/">
+            <Link to="/home">0
                 <H2>Home</H2>
             </Link>
             <Link to="/createGame">

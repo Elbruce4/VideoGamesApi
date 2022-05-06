@@ -280,13 +280,14 @@ router.post("/leaveComment" , async(req,res) => {
 
 router.delete("/deleteComment" , async(req,res) => {
     try {
-        let {userid , videogameid} = req.headers;
+        let {userid , videogameid, commentid} = req.headers;
         console.log("userid" , userid)
         console.log("videogameid" , videogameid)
         await Comment.destroy({
             where : {
                 userId : userid,
-                videogameId : videogameid
+                videogameId : videogameid,
+                id : commentid
             }
         })
         res.send("Comentario eliminado con éxito")

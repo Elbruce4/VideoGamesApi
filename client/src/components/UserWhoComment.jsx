@@ -4,7 +4,7 @@ import { GetAllUsers , DeleteComment } from "../Redux/actions";
 import { useNavigate } from "react-router-dom";
 import { CommentsDivName , H4 , Button} from "../Styles/GameDetail";
 
-const UserComment = ({idUser , idGame}) => {
+const UserComment = ({idUser , idGame , id}) => {
 
     
     let navigate = useNavigate()
@@ -18,12 +18,9 @@ const UserComment = ({idUser , idGame}) => {
         dispatch(GetAllUsers());
     },[dispatch]);
 
-    const handleDelete = (idUser , idGame) => {
-        console.log(idUser , idGame)
-        console.log(idUser)
-        console.log(idGame)
+    const handleDelete = (idUser , idGame , id) => {
         console.log("entra")
-        dispatch(DeleteComment(idUser , idGame))
+        dispatch(DeleteComment(idUser , idGame, id))
         alert("Comentario eliminado con éxito");
         navigate("/home")
     }
@@ -33,7 +30,7 @@ const UserComment = ({idUser , idGame}) => {
             <H4>{user.name} {user.lastName}</H4>
             
             {
-                userLogueado.id === idUser ? <Button onClick={() => handleDelete(idUser , idGame)}>Eliminar comentario</Button> : undefined
+                userLogueado.id === idUser ? <Button onClick={() => handleDelete(idUser , idGame , id)}>Eliminar comentario</Button> : undefined
             }
         </CommentsDivName>
     )

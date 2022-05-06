@@ -58,7 +58,7 @@ const GameDetail = () => {
                             <CommentsDiv key={obj.id}>
                                 <H4>{obj.title}</H4>
                                 <P>{obj.text}</P>
-                                <UserComment idUser={obj.userId} idGame={obj.videogameId}/>
+                                <UserComment idUser={obj.userId} idGame={obj.videogameId} id={obj.id}/>
                             </CommentsDiv>
                         )
                     }) :
