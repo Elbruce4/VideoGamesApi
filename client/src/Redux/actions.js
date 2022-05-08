@@ -170,7 +170,7 @@ export const AddNewGame = (data) => {
                 date : data.date,
                 rating : data.rating,
                 platforms :[data.platforms],
-                gender : [data.genre]
+                gender : data.genre
             }),
             headers : {
                 "Content-type" : "application/json"

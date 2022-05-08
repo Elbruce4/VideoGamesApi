@@ -21,11 +21,11 @@ const CreateGame = () => {
         date : "",
         rating : 0,
         platforms : "",
-        genre : ""
+        genre : []
     })
 
     const handleChange = (e) => {
-        console.log(data)
+        console.log(data)   
         if(e.target.name === "rating"){
             setData({
                 ...data,
@@ -37,6 +37,29 @@ const CreateGame = () => {
                 [e.target.name] : e.target.value
             })
         }
+    }
+
+    const handleGenre = (e) => {
+        console.log(data);
+        if(e.target.value !== "nothing") {
+            let isGenre = data.genre.find(obj => obj === e.target.value)
+            if(!isGenre){
+                setData({
+                    ...data,
+                    genre : [...data.genre, e.target.value]
+                })
+            }
+        }
+        e.target.value = "nothing"
+    }
+
+    const removeGenre = (e) => {
+        e.preventDefault();
+        console.log(e.target.value);
+        setData({
+            ...data,
+            genre : data.genre.filter(obj => obj !== e.target.value)
+        })
     }
 
     const handleSubmitForm = () => {
@@ -99,12 +122,21 @@ const CreateGame = () => {
                 <Label>Platforms</Label>
                 <Input type="text" placeholder="Platforms" name="platforms" onChange={handleChange}/>
                 <Label>Genre</Label>
-                <select >
+                <select onClick={handleGenre}>
+                    <option value="nothing">Select Genre/s:</option>
                     {
-                        genres ? genres.map((obj , index) => <option id={index} name="genre" onChange={handleChange}>{obj}</option>)
+                        genres ? genres.map((obj , index) => <option id={index} name="genre">{obj}</option>)
                          : undefined
                     }
                 </select>
+                    {
+                        data.genre.length > 0 ? data.genre.map((obj , index) => 
+                        <div key={index}>
+                            <p>{obj}</p>
+                            <button value={obj} onClick={removeGenre}>x</button>
+                        </div>
+                        ) : undefined
+                    }
                 <InputSubmit type="submit" value="Enviar" />
             </Form>
         </Div>
